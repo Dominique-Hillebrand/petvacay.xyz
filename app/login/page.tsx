@@ -26,7 +26,7 @@ export default function Login() {
       </Link> */}
 
       <form
-        className=" flex flex-col w-full gap-2 text-foreground"
+        className="flex flex-col w-full gap-2 text-foreground"
         action="/auth/sign-in"
         method="post"
       >
