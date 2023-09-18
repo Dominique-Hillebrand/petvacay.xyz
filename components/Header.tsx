@@ -11,22 +11,18 @@ export default async function Header() {
   } = await supabase.auth.getUser();
 
   return (
-    <nav className="w-full flex text-sm text-foreground">
+    <header className="">
+      <p className=""> this is the header</p>
       {user ? (
-        <div className="flex items-center gap-4">
+        <div className="">
           Hey, {user.email}!
           <LogoutButton />
         </div>
       ) : (
-        <>
-          <Link
-            href="/login"
-            className="py-2 px-4 rounded-md no-underline bg-btn-background hover:bg-btn-background-hover"
-          >
-            Login / Sign Up
-          </Link>
-        </>
+        <Link href="/login" className="buttom-black">
+          Login / Sign Up
+        </Link>
       )}
-    </nav>
+    </header>
   );
 }

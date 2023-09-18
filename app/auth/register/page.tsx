@@ -2,16 +2,22 @@ import Link from "next/link";
 
 export default function Register() {
   return (
-    <div>
-      <h1>REGISTER PAGE</h1>
-      <p>To you want to register as a </p>
-      <Link href="/auth/register/pet-owner" className="text-white border">
+    <main className="text-center">
+      <h1 className="mb-12">REGISTER PAGE</h1>
+      <p className="mb-12">Do you want to register as a ... </p>
+      <Link
+        href="/auth/register/pet-owner"
+        className="button-black text-white text-3xl"
+      >
         Pet-Owner
       </Link>
-      <p>or</p>
-      <Link href="/auth/register/pet-sitter" className="text-white border">
+      <p className="my-7">or</p>
+      <Link
+        href="/auth/register/pet-sitter"
+        className="button-black text-white text-3xl"
+      >
         Pet-Sitter
       </Link>
-    </div>
+    </main>
   );
 }
