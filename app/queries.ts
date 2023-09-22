@@ -76,3 +76,25 @@ export const petDetailsFromCurrentUser = async function () {
     );
   }
 };
+
+// **********get Data from house
+export const houseDetailsFromCurrentUser = async function () {
+  const supabase = createServerComponentClient({ cookies });
+  try {
+    const currentUserData = await currentUserAuth();
+    if (currentUserData) {
+      const { data, error } = await supabase
+        .from("houses")
+        .select("*")
+        .eq("owner_id", currentUserData.user.id);
+
+      if (error) throw new Error(error.message);
+      return data;
+    }
+  } catch (error) {
+    console.error(
+      "Error getting House Information of current user:",
+      error.message
+    );
+  }
+};

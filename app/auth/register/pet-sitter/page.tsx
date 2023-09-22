@@ -42,7 +42,7 @@ export default async function PetSitter() {
         price: price,
         status: status,
       });
-
+    console.log("🐩", houses);
     if (error || houseError) {
       throw new Error("An error occurred: " + error.message);
     } else {
@@ -133,9 +133,9 @@ export default async function PetSitter() {
         </label>
         <input
           className="input-text"
-          type="text"
+          type="number"
           name="price"
-          placeholder="Price"
+          placeholder="Price in €"
           required
         />
         <label className="text-md" htmlFor="status">
