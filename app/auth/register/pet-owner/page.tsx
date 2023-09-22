@@ -14,6 +14,7 @@ export default async function PetOwner() {
     const first_name = formData.get("firstName");
     const last_name = formData.get("lastName");
     const address = formData.get("address");
+    const number = formData.get("number");
     const role_id = formData.get("roleId");
 
     const name = formData.get("petName");
@@ -27,6 +28,7 @@ export default async function PetOwner() {
       first_name: first_name,
       last_name: last_name,
       address: address,
+      number: number,
       role_id: role_id,
     });
     revalidatePath("/");
@@ -81,6 +83,16 @@ export default async function PetOwner() {
           type="text"
           name="address"
           placeholder="Address"
+          required
+        />
+        <label className="text-md" htmlFor="mobile number">
+          Mobile Nr.
+        </label>
+        <input
+          className="input-text"
+          type="text"
+          name="number"
+          placeholder="Number"
           required
         />
         <input type="hidden" className="text-md" name="roleId" value="1" />

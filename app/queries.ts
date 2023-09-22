@@ -4,7 +4,7 @@ import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 export const dynamic = "force-dynamic";
 
-//***** */
+//***** Data from AUTH Table*/
 export const currentUserAuth = async function () {
   const supabase = createServerComponentClient({ cookies });
 
@@ -17,7 +17,7 @@ export const currentUserAuth = async function () {
   }
 };
 
-//****** Data from AUTH Table*/
+//****** Data from Profile Table*/
 export const currentUserProfiles = async function () {
   const supabase = createServerComponentClient({ cookies });
 
@@ -98,3 +98,22 @@ export const houseDetailsFromCurrentUser = async function () {
     );
   }
 };
+
+// **********get all houses
+export const allHouses= async function () {
+  const supabase = createServerComponentClient({ cookies });
+  try {
+      const { data, error } = await supabase
+        .from("houses")
+        .select("*")
+        // .eq("status", open);
+
+      if (error) throw new Error(error.message);
+      return data;
+   } catch (error) {
+    console.error(
+      "Error all houses:",
+      error.message
+    );
+  }
+}
