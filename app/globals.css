@@ -42,7 +42,7 @@
   h6 {
     @apply text-2xl mb-4;
   }
-    .button-black {
+  .button-black {
     @apply py-2 px-4 rounded-md no-underline bg-btn-background hover:bg-btn-background-hover;
   } 
   .button-gray {
@@ -58,8 +58,14 @@
   .input-text {
     @apply rounded-md px-4 py-2 bg-inherit border mb-6
   } 
+  .text-small {
+    @apply text-xs
+  }
 }
 
+.box-shadow1 {
+  box-shadow: rgba(206, 204, 204, 0.25) 0px 54px 55px, rgba(236, 223, 223, 0.12) 0px -12px 30px, rgba(245, 240, 240, 0.12) 0px 4px 6px, rgba(234, 219, 219, 0.17) 0px 12px 13px, rgba(184, 183, 183, 0.09) 0px -3px 5px;
+}
 /* .animate-in {
   animation: animateIn 0.3s ease 0.15s both;
 }

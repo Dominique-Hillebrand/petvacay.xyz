@@ -131,7 +131,7 @@ export default async function PetSitter() {
           required
         />
         <label className="text-md" htmlFor="houseDescription">
-          Tell us more about your house.
+          Tell us more about your yourseslf and your home.
         </label>
         <textarea
           className="input-text"
@@ -141,7 +141,7 @@ export default async function PetSitter() {
           required
         />
         <label className="text-md" htmlFor="price">
-          Price per day
+          Price per night
         </label>
         <input
           className="input-text"

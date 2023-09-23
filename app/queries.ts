@@ -121,24 +121,37 @@ export const houseDetailsFromCurrentUser = async function () {
 //   }
 
 
-export const allHouses= async function () {
+export const allHouses = async function () {
   const supabase = createServerComponentClient({ cookies });
   try {
-      const { data, error } = await supabase
-        .from("houses")
-        .select(`
+    const { data, error } = await supabase.from("houses").select(`
         *, 
         profiles (*)
-        `)
-        // .eq("status", open);
-      if (error) throw new Error(error.message);
-      return data;
-   } catch (error) {
-    console.error(
-      "Error all houses:",
-      error.message
-    );
+        `);
+    // .eq("status", open);
+    if (error) throw new Error(error.message);
+    return data;
+  } catch (error) {
+    console.error("Error all houses:", error.message);
   }
+};
 
-
-}
+//get house and person info by houseid
+export const houseById = async function (id) {
+  const supabase = createServerComponentClient({ cookies });
+  try {
+    const { data, error } = await supabase
+      .from("houses")
+      .select(
+        `
+          *, 
+          profiles (*)
+          `
+      )
+      .eq("id", id);
+    if (error) throw new Error(error.message);
+    return data;
+  } catch (error) {
+    console.error("Error all houses:", error.message);
+  }
+};
