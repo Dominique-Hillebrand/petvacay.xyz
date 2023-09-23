@@ -1,5 +1,7 @@
 import { allHouses } from "@/app/queries";
 
+export const dynamic = "force-dynamic";
+
 export default async function CardHouses() {
   let houses = await allHouses();
 

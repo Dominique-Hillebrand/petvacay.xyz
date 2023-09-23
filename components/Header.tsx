@@ -4,6 +4,7 @@ import Link from "next/link";
 import LogoutButton from "../components/LogoutButton";
 import { currentUserAuth } from "@/app/queries";
 import { roleIdCurrentUser } from "@/app/queries";
+export const dynamic = "force-dynamic";
 
 export default async function Header() {
   const user = await currentUserAuth();

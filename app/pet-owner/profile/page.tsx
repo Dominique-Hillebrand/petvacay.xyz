@@ -3,6 +3,8 @@
 import { currentUserProfiles } from "@/app/queries";
 import { petDetailsFromCurrentUser } from "@/app/queries";
 
+export const dynamic = "force-dynamic";
+
 export default async function ProfilePetOwner() {
   const userData = await currentUserProfiles();
   let petData;

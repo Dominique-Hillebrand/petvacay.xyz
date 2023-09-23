@@ -3,6 +3,8 @@
 import { currentUserProfiles } from "@/app/queries";
 import { houseDetailsFromCurrentUser } from "@/app/queries";
 
+export const dynamic = "force-dynamic";
+
 export default async function ProfilePetSitter() {
   const userData = await currentUserProfiles();
   let houseData;
