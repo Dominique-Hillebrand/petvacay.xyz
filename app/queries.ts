@@ -99,15 +99,38 @@ export const houseDetailsFromCurrentUser = async function () {
   }
 };
 
-// **********get all houses
+// **********get all houses with owner information
+// export const allHouses= async function () {
+//   const supabase = createServerComponentClient({ cookies });
+//   try {
+//       const { data, error } = await supabase
+//         .from("profiles")
+//         .select(
+//           "id, first_name, last_name, address, number, houses (owner_id, name, foto, m2, description, price, status)"
+//         )
+//         .eq("id", "owner_id");
+//         // .eq("status", open);
+
+//       if (error) throw new Error(error.message);
+//       return data;
+//    } catch (error) {
+//     console.error(
+//       "Error all houses:",
+//       error.message
+//     );
+//   }
+
+
 export const allHouses= async function () {
   const supabase = createServerComponentClient({ cookies });
   try {
       const { data, error } = await supabase
         .from("houses")
-        .select("*")
+        .select(`
+        *, 
+        profiles (*)
+        `)
         // .eq("status", open);
-
       if (error) throw new Error(error.message);
       return data;
    } catch (error) {
@@ -116,4 +139,6 @@ export const allHouses= async function () {
       error.message
     );
   }
+
+
 }
