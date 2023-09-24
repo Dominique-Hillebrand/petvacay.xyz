@@ -3,16 +3,17 @@
 import { houseById } from "@/app/queries";
 import Link from "next/link";
 
-export default async function ShowSitter({
+export default async function BookSitter({
   params,
 }: {
   params: { id: string };
 }) {
   let house = await houseById(params.id);
-  console.log("iiiiiiiid", house[0].id);
+  console.log(house, params);
   return (
     <main>
-      <h1> {house[0].name}</h1>
+      <h1 className="text-green-700">You have successfully booked</h1>
+      <h3 className="text-green-700">{house[0].name}</h3>
       <p>{house[0].foto}</p>
       <p className="italic">Description:</p>
       <p className="ml-6">{house[0].description}</p>
@@ -29,17 +30,13 @@ export default async function ShowSitter({
       )}
       <br />
       <p>{house[0].m2} m2</p>
-      <p>price/night: {house[0].price} €</p>
-      <p className="mb-10 button-gray w-[100px] text-center">
+      <h4 className="text-green-700">price/night: {house[0].price} €</h4>
+      {/* <p className="mb-10 button-gray w-[100px] text-center">
         {house[0].status}
-      </p>
-      <Link
-        href={`/pet-owner/book/${house[0].id}`}
-        className="button-green"
-        // id={house.id}
-      >
-        Book
-      </Link>
+      </p> */}
+      {/* <Link href={`/pet-owner/book/${house.id}`} className="button-green">
+        Contact 
+      </Link> */}
     </main>
   );
 }

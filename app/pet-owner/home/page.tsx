@@ -7,7 +7,7 @@ export default async function Home() {
     <main>
       <h1 className="">Find Pet-Sitters nearby!</h1>
       <p className="">---show houses and persons --</p>
-      <div className="grid grid-cols-4 box-shadow1">
+      <div className="grid grid-cols-4 box-shadow1 rounded-xl">
         <CardHouses />
       </div>
     </main>
