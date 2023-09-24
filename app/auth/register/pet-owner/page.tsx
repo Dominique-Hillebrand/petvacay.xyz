@@ -149,8 +149,7 @@ export default async function PetOwner() {
           placeholder="Breed"
           required
         />
-
-        <button className="bg-green-700 rounded px-4 py-2 text-white mb-2">
+        <button className="bg-green-700 rounded px-4 py-2 text-white mb-2 mt-16">
           Register
         </button>
       </form>

@@ -33,11 +33,7 @@ export default async function ShowSitter({
       <p className="mb-10 button-gray w-[100px] text-center">
         {house[0].status}
       </p>
-      <Link
-        href={`/pet-owner/book/${house[0].id}`}
-        className="button-green"
-        // id={house.id}
-      >
+      <Link href={`/pet-owner/book/${house[0].id}`} className="button-green">
         Book
       </Link>
     </main>

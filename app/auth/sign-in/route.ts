@@ -31,14 +31,20 @@ export async function POST(request: Request) {
 
   let roleId = await roleIdCurrentUser();
 
-  if (roleId[0].role_id == 1) {
-    return NextResponse.redirect(new URL("/pet-owner/home", request.url), {
-      // a 301 status is required to redirect from a POST to a GET route
-      status: 301,
-    });
+  if (Array.isArray(roleId) && roleId.length > 0) {
+    if (roleId[0].role_id == 1) {
+      return NextResponse.redirect(new URL("/pet-owner/home", request.url), {
+        // a 301 status is required to redirect from a POST to a GET route
+        status: 301,
+      });
+    } else if (roleId[0].role_id == 2) {
+      return NextResponse.redirect(new URL("/pet-sitter/home", request.url), {
+        status: 301,
+      });
+    }
   } else {
-    return NextResponse.redirect(new URL("/pet-sitter/home", request.url), {
-      // a 301 status is required to redirect from a POST to a GET route
+    console.log("User is not registered. Redirecting to register page.");
+    return NextResponse.redirect(new URL("/auth/register", request.url), {
       status: 301,
     });
   }
