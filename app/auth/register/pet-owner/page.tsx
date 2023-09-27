@@ -1,16 +1,16 @@
 // @ts-nocheck
 
 import { cookies } from "next/headers";
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { createServerActionClient } from "@supabase/auth-helpers-nextjs";
-import { revalidatePath } from "next/cache";
+// import Avatar from "@/components/Avatar";
 import { redirect } from "next/navigation";
-
+import { revalidatePath } from "next/cache";
 export const dynamic = "force-dynamic";
 
 export default async function PetOwner() {
   const addPersonPet = async (formData) => {
     "use server";
-
     const first_name = formData.get("firstName");
     const last_name = formData.get("lastName");
     const address = formData.get("address");
@@ -22,15 +22,34 @@ export default async function PetOwner() {
     const age = formData.get("petAge");
     const description = formData.get("petDescription");
     const breed = formData.get("petBreed");
+    const avatar = formData.get("avatar");
+
+    const supabaseAuth = createServerComponentClient({ cookies });
+    const { data: user, error: userError } = await supabaseAuth.auth.getUser();
+    const file = avatar.name;
+    const filePath = user.user.id + "/" + Math.random() + "." + file;
 
     const supabase = createServerActionClient({ cookies });
-    const { data, error } = await supabase.from("profiles").insert({
-      first_name: first_name,
-      last_name: last_name,
-      address: address,
-      number: number,
-      role_id: role_id,
-    });
+    let { data: avatarUpload, error: uploadError } = await supabase.storage
+      .from("avatars")
+      .upload(filePath, file);
+
+    if (uploadError) {
+      throw uploadError;
+    } else if (avatarUpload) {
+      console.log("Erfolgreich!!!!!!!!!!!!!!!!!!!1");
+    }
+
+    const { data: profiles, error: profilesError } = await supabase
+      .from("profiles")
+      .insert({
+        first_name: first_name,
+        last_name: last_name,
+        address: address,
+        number: number,
+        role_id: role_id,
+      });
+
     revalidatePath("/");
 
     const { data: pets, error: petsError } = await supabase
@@ -43,8 +62,8 @@ export default async function PetOwner() {
         breed: breed,
       });
 
-    if (error || petsError) {
-      throw new Error("An error occurred: " + error.message);
+    if (profilesError || petsError) {
+      throw new Error("An error occurred: ");
     } else {
       redirect("/pet-owner/home");
     }
@@ -149,6 +168,8 @@ export default async function PetOwner() {
           placeholder="Breed"
           required
         />
+        <input type="file" id="single" accept="image/*" name="avatar" />
+
         <button className="bg-green-700 rounded px-4 py-2 text-white mb-2 mt-16">
           Register
         </button>
