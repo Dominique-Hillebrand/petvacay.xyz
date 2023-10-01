@@ -1,27 +1,57 @@
+// @ts-nocheck
+
 "use client";
+import { useState } from "react";
+import { createClient } from "@supabase/supabase-js";
+import Image from "next/image";
 
-import { useEffect, useState } from "react";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+export default function Avatar({ userId }) {
+  const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+    {
+      auth: {
+        persistSession: false,
+      },
+    }
+  );
+  const [file, setfile] = useState([]);
+  const [avatarPath, setAvatarPath] = useState("");
 
-export default function Avatar() {
-  //   const [userId, setUserId] = useState("");
-  //   //   const [media, setMedia] = useState([]);
-  //   const supabase = createClientComponentClient();
-  //   const getUser = async () => {
-  //     try {
-  //       const {
-  //         data: { user },
-  //       } = await supabase.auth.getUser();
-  //       if (user !== null) {
-  //         setUserId(user.id);
-  //       } else {
-  //         setUserId("");
-  //       }
-  //     } catch (e) {}
-  //   };
-  //   console.log("user_id", userId);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const filePathFolder = `${userId}/${Math.random()}-${file.name}`;
+    const { data, error } = await supabase.storage
+      .from("avatars")
+      .upload(filePathFolder, file, {
+        cacheControl: "3600",
+        upsert: false,
+      });
 
-  //   console.log("schaunmamal", avatar); //Blob {size: 176, type: "image/svg+xml"}
-  //   console.log(".name", avatar.name); // rectangle-orange.svg
-  return <input type="file" id="single" accept="image/*" name="avatar" />;
+    setAvatarPath(data?.path);
+  };
+
+  const handleFileSelected = (e) => {
+    setfile(e.target.files[0]);
+  };
+  const { data: avatar } = supabase.storage
+    .from("avatars")
+    .getPublicUrl(`${avatarPath}`);
+
+  return (
+    <div>
+      <form onSubmit={handleSubmit} className="signUp-form">
+        <label className="" htmlFor="uploadFoto">
+          Upload a Foto of your Pet
+        </label>
+        <input type="file" name="image" onChange={handleFileSelected} />
+        <button type="submit" className="button-green">
+          Upload image
+        </button>
+      </form>
+      {avatar.publicUrl && (
+        <img src={avatar.publicUrl} alt="" width={100} height={100} />
+      )}
+    </div>
+  );
 }

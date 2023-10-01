@@ -155,3 +155,26 @@ export const houseById = async function (id) {
     console.error("Error all houses:", error.message);
   }
 };
+
+// get all files from the users bucket
+export const allFilesFromUser = async function () {
+  const supabase = createServerComponentClient({ cookies });
+
+  try {
+    const currentUserData = await currentUserAuth();
+    if (currentUserData) {
+      const { data, error } = await supabase
+        .storage
+        .from('avatars')
+        .list(currentUserData.user.id + "/", {
+          limit: 100,
+          offset: 0,
+          sortBy: { column: 'name', order: 'asc' },
+        })
+        if (error) throw new Error(error.message);
+          return data;
+      }      
+  } catch (error) {
+    console.error("Error allFilesFromUser:", error.message);
+  }
+} 
