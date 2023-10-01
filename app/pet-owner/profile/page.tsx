@@ -2,6 +2,7 @@
 
 import { currentUserProfiles } from "@/app/queries";
 import { petDetailsFromCurrentUser } from "@/app/queries";
+import Avatar from "@/components/Avatar";
 
 export const dynamic = "force-dynamic";
 
@@ -29,6 +30,7 @@ export default async function ProfilePetOwner() {
         <p>Description:</p> <p> {petData[0].description}</p>
         <p>Breed:</p> <p> {petData[0].breed}</p>
       </div>
+      <Avatar userId={userData[0].id} />
     </main>
   );
 }
