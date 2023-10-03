@@ -18,6 +18,7 @@ export default function Avatar({ userId }) {
   );
   const [file, setfile] = useState([]);
   const [avatarPath, setAvatarPath] = useState();
+  // const [show, setShow] = useState(true);
 
   const handleFileSelected = (e) => {
     setfile(e.target.files[0]);
@@ -32,35 +33,52 @@ export default function Avatar({ userId }) {
         cacheControl: "3600",
         upsert: false,
       });
+    console.log("uploaded file to storage", filePathFolder, file);
 
     setAvatarPath(data?.path);
-    getPublicURL();
   };
 
   function getPublicURL() {
-    const { data: avatar } = supabase.storage
-      .from("avatars")
-      .getPublicUrl(`${avatarPath}`);
-    console.log("publicURL avatar", avatar.publicUrl);
-
-    uploadFileToPetTable(avatar.publicUrl);
-    console.log(avatar?.publicUrl);
+    if (avatarPath) {
+      const { data: avatar } = supabase.storage
+        .from("avatars")
+        .getPublicUrl(avatarPath);
+      console.log("get publicURL avatar", avatar.publicUrl);
+      // upsertFotoPetTable(avatar.publicUrl);
+    }
   }
+  useEffect(() => {
+    getPublicURL();
+  }, [avatarPath]);
 
-  const uploadFileToPetTable = async (url) => {
-    const supabase = createClientComponentClient();
-    const { data, error } = await supabase
-      .from("pets")
-      .update({
-        foto: url,
-      })
-      .eq("owner_id", userId);
-  };
+  // const upsertFotoPetTable = async (url) => {
+  //   const supabase = createClientComponentClient();
+  //   const { data, error } = await supabase
+  //     .from("pets")
+  //     .upsert(
+  //       {
+  //         foto: url,
+  //       },
+  //       {
+  //         returning: "minimal",
+  //         onConflict: ["owner_id"],
+  //         action: "update",
+  //       }
+  //     )
+  //     .eq("owner_id", userId);
+  //   console.log("uploaded file to pet table");
+  //   if (error) {
+  //     console.error("Error uploading file to pet table:", error.message);
+  //   } else {
+  //     console.log("Uploaded file to pet table:", data);
+  //   }
+  // };
 
   // redirect("/pet-owner/home");
 
   return (
     <div>
+      {/* {show && ( */}
       <form onSubmit={handleSubmit} className="signUp-form">
         <label className="" htmlFor="uploadFoto">
           Upload a Foto of your Pet
@@ -70,6 +88,7 @@ export default function Avatar({ userId }) {
           Upload image
         </button>
       </form>
+      {/* )} */}
       {/* {avatar.publicUrl && (
         <img src={avatar.publicUrl} alt="" width={100} height={100} />
       )} */}

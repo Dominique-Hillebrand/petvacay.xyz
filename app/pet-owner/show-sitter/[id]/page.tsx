@@ -2,7 +2,6 @@
 
 import { houseById } from "@/app/queries";
 import Link from "next/link";
-export const dynamic = "force-dynamic";
 
 export default async function ShowSitter({
   params,
@@ -10,7 +9,6 @@ export default async function ShowSitter({
   params: { id: string };
 }) {
   let house = await houseById(params.id);
-  console.log("iiiiiiiid", house[0].id);
   return (
     <main>
       <h1> {house[0].name}</h1>

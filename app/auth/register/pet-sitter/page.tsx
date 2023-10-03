@@ -5,7 +5,6 @@ import { createServerActionClient } from "@supabase/auth-helpers-nextjs";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
-export const dynamic = "force-dynamic";
 
 export default async function PetSitter() {
   const addPersonHouse = async (formData) => {
@@ -44,7 +43,6 @@ export default async function PetSitter() {
         price: price,
         status: status,
       });
-    console.log("🐩", houses);
     if (error || houseError) {
       throw new Error("An error occurred: " + error.message);
     } else {

@@ -3,15 +3,12 @@
 import { houseById } from "@/app/queries";
 import Link from "next/link";
 
-export const dynamic = "force-dynamic";
-
 export default async function BookSitter({
   params,
 }: {
   params: { id: string };
 }) {
   let house = await houseById(params.id);
-  console.log(house, params);
   return (
     <main>
       <h1 className="text-green-700">You have successfully booked</h1>

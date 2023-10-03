@@ -5,7 +5,7 @@ import { createServerActionClient } from "@supabase/auth-helpers-nextjs";
 // import Avatar from "@/components/Avatar";
 import { redirect } from "next/navigation";
 // import { revalidatePath } from "next/cache";
-export const dynamic = "force-dynamic";
+// import { currentUserAuth } from "@/app/queries";
 
 export default async function PetOwner() {
   const addPersonPet = async (formData) => {
@@ -50,6 +50,7 @@ export default async function PetOwner() {
     }
     redirect("/pet-owner/profile");
   };
+  // const { user } = await currentUserAuth();
 
   return (
     <main className="">

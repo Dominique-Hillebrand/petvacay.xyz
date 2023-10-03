@@ -2,7 +2,6 @@
 
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
-export const dynamic = "force-dynamic";
 
 //***** Data from AUTH Table*/
 export const currentUserAuth = async function () {
