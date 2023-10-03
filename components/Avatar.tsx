@@ -18,7 +18,7 @@ export default function Avatar({ userId }) {
   );
   const [file, setfile] = useState([]);
   const [avatarPath, setAvatarPath] = useState();
-  // const [show, setShow] = useState(true);
+  const [publicUrlsArray, setPublicUrlsArray] = useState([]);
 
   const handleFileSelected = (e) => {
     setfile(e.target.files[0]);
@@ -38,47 +38,70 @@ export default function Avatar({ userId }) {
     setAvatarPath(data?.path);
   };
 
-  function getPublicURL() {
-    if (avatarPath) {
-      const { data: avatar } = supabase.storage
+  useEffect(() => {
+    listAllFileUrlsFromBucket();
+  }, [avatarPath]);
+
+  // redirect("/pet-owner/home");
+  async function listAllFileUrlsFromBucket() {
+    try {
+      const { data, error } = await supabase.storage
         .from("avatars")
-        .getPublicUrl(avatarPath);
-      console.log("get publicURL avatar", avatar.publicUrl);
-      // upsertFotoPetTable(avatar.publicUrl);
+        .list(userId, {
+          limit: 100,
+          offset: 0,
+          sortBy: { column: "name", order: "asc" },
+        });
+      if (error) {
+        console.error("Error listing files:", error.message);
+        return [];
+      }
+
+      const urls = await publicUrls(data);
+      setPublicUrlsArray(urls);
+
+      return urls;
+    } catch (error) {
+      console.error("An error occurred:", error.message);
+      return [];
+    }
+
+    async function publicUrls(data) {
+      const urls = await Promise.all(
+        data.map(async (file) => {
+          try {
+            const { data: fileData, error: fileError } = supabase.storage
+              .from("avatars")
+              .getPublicUrl(`${userId}/${file.name}`);
+
+            if (fileError) {
+              console.error(
+                "Error getting public URL for file:",
+                file.name,
+                fileError.message
+              );
+              return null;
+            }
+            console.log(fileData.publicUrl);
+            console.log("is this array", fileData);
+            return fileData.publicUrl;
+          } catch (error) {
+            console.error("An error occurred:", error.message);
+            return null;
+          }
+        })
+      );
+      const filteredUrls = urls.filter((url) => url !== null);
+      console.log("All public URLs:", filteredUrls);
+
+      return filteredUrls;
     }
   }
   useEffect(() => {
-    getPublicURL();
-  }, [avatarPath]);
-
-  // const upsertFotoPetTable = async (url) => {
-  //   const supabase = createClientComponentClient();
-  //   const { data, error } = await supabase
-  //     .from("pets")
-  //     .upsert(
-  //       {
-  //         foto: url,
-  //       },
-  //       {
-  //         returning: "minimal",
-  //         onConflict: ["owner_id"],
-  //         action: "update",
-  //       }
-  //     )
-  //     .eq("owner_id", userId);
-  //   console.log("uploaded file to pet table");
-  //   if (error) {
-  //     console.error("Error uploading file to pet table:", error.message);
-  //   } else {
-  //     console.log("Uploaded file to pet table:", data);
-  //   }
-  // };
-
-  // redirect("/pet-owner/home");
-
+    listAllFileUrlsFromBucket();
+  }, []);
   return (
     <div>
-      {/* {show && ( */}
       <form onSubmit={handleSubmit} className="signUp-form">
         <label className="" htmlFor="uploadFoto">
           Upload a Foto of your Pet
@@ -88,10 +111,16 @@ export default function Avatar({ userId }) {
           Upload image
         </button>
       </form>
-      {/* )} */}
-      {/* {avatar.publicUrl && (
-        <img src={avatar.publicUrl} alt="" width={100} height={100} />
-      )} */}
+      <div>
+        {publicUrlsArray.map((url, index) => (
+          <img
+            key={index}
+            src={url}
+            alt={`Image ${index}`}
+            style={{ width: "100px", height: "100px", margin: "5px" }}
+          />
+        ))}
+      </div>
     </div>
   );
 }
