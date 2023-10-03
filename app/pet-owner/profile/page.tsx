@@ -21,14 +21,16 @@ export default async function ProfilePetOwner() {
         <p>Tel. Nr.: </p> <p> {userData[0].number}</p>
       </div>
       <h2 className="mb-6">Your pets Data</h2>
-      <div className="grid grid-cols-2 max-w-[300px]">
+      <div className="grid grid-cols-2 max-w-[300px] mb-8">
         <p>Pet Name: </p> <p>{petData[0].name}</p>
         <p>Foto: </p> <p>{petData[0].foto}</p>
         <p>Age:</p> <p> {petData[0].age} years</p>
         <p>Description:</p> <p> {petData[0].description}</p>
         <p>Breed:</p> <p> {petData[0].breed}</p>
       </div>
-      <Avatar userId={userData[0].id} />
+      <div className="">
+        <Avatar userId={userData[0].id} />
+      </div>
     </main>
   );
 }

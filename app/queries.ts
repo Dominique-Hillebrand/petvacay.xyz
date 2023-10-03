@@ -177,3 +177,35 @@ export const allFilesFromUser = async function () {
     console.error("Error allFilesFromUser:", error.message);
   }
 } 
+
+// publicUrls
+export const publicUrls = async function (data) {
+  const urls = await Promise.all(
+    data.map(async (file) => {
+      try {
+        const { data: fileData, error: fileError } = supabase.storage
+          .from("houses")
+          .getPublicUrl(`${userId}/${file.name}`);
+
+        if (fileError) {
+          console.error(
+            "Error getting public URL for file:",
+            file.name,
+            fileError.message
+          );
+          return null;
+        }
+        console.log(fileData.publicUrl);
+        console.log("is this array", fileData);
+        return fileData.publicUrl;
+      } catch (error) {
+        console.error("An error occurred:", error.message);
+        return null;
+      }
+    })
+  );
+  const filteredUrls = urls.filter((url) => url !== null);
+  console.log("All public URLs:", filteredUrls);
+
+  return filteredUrls;
+}

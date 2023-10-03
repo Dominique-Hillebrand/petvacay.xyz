@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { createClient } from "@supabase/supabase-js";
 import { redirect } from "next/navigation";
 
-export default function Avatar({ userId }) {
+export default function FotosHouses({ userId }) {
   const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
@@ -17,7 +17,7 @@ export default function Avatar({ userId }) {
     }
   );
   const [file, setfile] = useState([]);
-  const [avatarPath, setAvatarPath] = useState();
+  const [fotoPath, setFotoPath] = useState();
   const [publicUrlsArray, setPublicUrlsArray] = useState([]);
 
   const handleFileSelected = (e) => {
@@ -28,25 +28,25 @@ export default function Avatar({ userId }) {
     e.preventDefault();
     const filePathFolder = `${userId}/${Math.random()}-${file.name}`;
     const { data, error } = await supabase.storage
-      .from("avatars")
+      .from("houses")
       .upload(filePathFolder, file, {
         cacheControl: "3600",
         upsert: false,
       });
     console.log("uploaded file to storage", filePathFolder, file);
 
-    setAvatarPath(data?.path);
+    setFotoPath(data?.path);
   };
 
   useEffect(() => {
     listAllFileUrlsFromBucket();
-  }, [avatarPath]);
+  }, [fotoPath]);
 
   // redirect("/pet-owner/home");
   async function listAllFileUrlsFromBucket() {
     try {
       const { data, error } = await supabase.storage
-        .from("avatars")
+        .from("houses")
         .list(userId, {
           limit: 100,
           offset: 0,
@@ -71,7 +71,7 @@ export default function Avatar({ userId }) {
         data.map(async (file) => {
           try {
             const { data: fileData, error: fileError } = supabase.storage
-              .from("avatars")
+              .from("houses")
               .getPublicUrl(`${userId}/${file.name}`);
 
             if (fileError) {
@@ -107,7 +107,7 @@ export default function Avatar({ userId }) {
         className="signUp-form"
         style={{ display: publicUrlsArray.length < 3 ? "flex" : "none" }}
       >
-        <h6>Upload 3 Fotos here:</h6>
+        <h6>Upload your Fotos here:</h6>
         <input type="file" name="image" onChange={handleFileSelected} />
         <button type="submit" className="button-gray max-w-[300px]">
           Upload image

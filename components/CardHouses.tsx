@@ -1,8 +1,14 @@
+// @ts-nocheck
+
 import { allHouses } from "@/app/queries";
+import { currentUserProfiles } from "@/app/queries";
+import { publicUrls } from "@/app/queries";
 import Link from "next/link";
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+import { cookies } from "next/headers";
 
 export default async function CardHouses() {
-  let houses = await allHouses();
+  const houses = await allHouses();
 
   return (
     <>
