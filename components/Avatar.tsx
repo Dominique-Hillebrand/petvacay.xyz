@@ -121,7 +121,7 @@ export default function Avatar({ userId }) {
               src={url}
               alt={`Image ${index}`}
               style={{ width: "200px", height: "200px", margin: "5px" }}
-              className="object-fit"
+              className="object-cover"
             />
           ))}
       </div>

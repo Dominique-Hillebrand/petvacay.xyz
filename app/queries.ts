@@ -209,3 +209,71 @@ export const publicUrls = async function (data) {
 
   return filteredUrls;
 }
+
+// get fotos of houses and avatars and return the newData with alll information
+export async function getFotosUrl(houses) {
+  const data = await Promise.all(
+    houses?.map(async (house) => {
+      const houseUrls = await listAllFileUrlsFromBucket(
+        "houses",
+        house.profiles.id
+      );
+      const profileUrls = await listAllFileUrlsFromBucket(
+        "avatars",
+        house.profiles.id
+      );
+    
+      return { ...house, houseFotos: houseUrls, profileFotos: profileUrls };
+    })
+  );
+
+  async function listAllFileUrlsFromBucket(bucketName, id) {
+    const supabase = createServerComponentClient({ cookies });
+
+    try {
+      const { data, error } = await supabase.storage.from(bucketName).list(id, {
+        limit: 100,
+        offset: 0,
+        sortBy: { column: "name", order: "asc" },
+      });
+      if (error) {
+        console.error("Error listing files:", error.message);
+        return [];
+      }
+      const urls = await publicUrls(data);
+      return urls;
+    } catch (error) {
+      console.error("An error occurred:", error.message);
+      return [];
+    }
+
+    async function publicUrls(data) {
+      const urls = await Promise.all(
+        data.map(async (file) => {
+          try {
+            const { data: fileData, error: fileError } = supabase.storage
+              .from(bucketName)
+              .getPublicUrl(`${id}/${file.name}`);
+
+            if (fileError) {
+              console.error(
+                "Error getting public URL for file:",
+                file.name,
+                fileError.message
+              );
+              return null;
+            }
+
+            return fileData.publicUrl;
+          } catch (error) {
+            console.error("An error occurred:", error.message);
+            return null;
+          }
+        })
+      );
+      const filteredUrls = urls.filter((url) => url !== null);
+      return filteredUrls;
+    }
+  }
+  return data
+}
