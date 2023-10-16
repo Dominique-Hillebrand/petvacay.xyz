@@ -195,8 +195,6 @@ export const publicUrls = async function (data) {
           );
           return null;
         }
-        console.log(fileData.publicUrl);
-        console.log("is this array", fileData);
         return fileData.publicUrl;
       } catch (error) {
         console.error("An error occurred:", error.message);
@@ -208,7 +206,7 @@ export const publicUrls = async function (data) {
   console.log("All public URLs:", filteredUrls);
 
   return filteredUrls;
-}
+};
 
 // get fotos of houses and avatars and return the newData with alll information
 export async function getFotosUrl(houses) {
@@ -222,58 +220,59 @@ export async function getFotosUrl(houses) {
         "avatars",
         house.profiles.id
       );
-    
+
       return { ...house, houseFotos: houseUrls, profileFotos: profileUrls };
     })
   );
 
-  async function listAllFileUrlsFromBucket(bucketName, id) {
-    const supabase = createServerComponentClient({ cookies });
+  return data;
+}
 
-    try {
-      const { data, error } = await supabase.storage.from(bucketName).list(id, {
-        limit: 100,
-        offset: 0,
-        sortBy: { column: "name", order: "asc" },
-      });
-      if (error) {
-        console.error("Error listing files:", error.message);
-        return [];
-      }
-      const urls = await publicUrls(data);
-      return urls;
-    } catch (error) {
-      console.error("An error occurred:", error.message);
+async function listAllFileUrlsFromBucket(bucketName, id) {
+  const supabase = createServerComponentClient({ cookies });
+
+  try {
+    const { data, error } = await supabase.storage.from(bucketName).list(id, {
+      limit: 100,
+      offset: 0,
+      sortBy: { column: "name", order: "asc" },
+    });
+    if (error) {
+      console.error("Error listing files:", error.message);
       return [];
     }
+    const urls = await publicUrls(data);
+    return urls;
+  } catch (error) {
+    console.error("An error occurred:", error.message);
+    return [];
+  }
 
-    async function publicUrls(data) {
-      const urls = await Promise.all(
-        data.map(async (file) => {
-          try {
-            const { data: fileData, error: fileError } = supabase.storage
-              .from(bucketName)
-              .getPublicUrl(`${id}/${file.name}`);
+  async function publicUrls(data) {
+    const urls = await Promise.all(
+      data.map(async (file) => {
+        try {
+          const { data: fileData, error: fileError } = supabase.storage
+            .from(bucketName)
+            .getPublicUrl(`${id}/${file.name}`);
 
-            if (fileError) {
-              console.error(
-                "Error getting public URL for file:",
-                file.name,
-                fileError.message
-              );
-              return null;
-            }
-
-            return fileData.publicUrl;
-          } catch (error) {
-            console.error("An error occurred:", error.message);
+          if (fileError) {
+            console.error(
+              "Error getting public URL for file:",
+              file.name,
+              fileError.message
+            );
             return null;
           }
-        })
-      );
-      const filteredUrls = urls.filter((url) => url !== null);
-      return filteredUrls;
-    }
+
+          return fileData.publicUrl;
+        } catch (error) {
+          console.error("An error occurred:", error.message);
+          return null;
+        }
+      })
+    );
+    const filteredUrls = urls.filter((url) => url !== null);
+    return filteredUrls;
   }
-  return data
 }

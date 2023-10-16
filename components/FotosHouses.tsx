@@ -82,8 +82,6 @@ export default function FotosHouses({ userId }) {
               );
               return null;
             }
-            console.log(fileData.publicUrl);
-            console.log("is this array", fileData);
             return fileData.publicUrl;
           } catch (error) {
             console.error("An error occurred:", error.message);

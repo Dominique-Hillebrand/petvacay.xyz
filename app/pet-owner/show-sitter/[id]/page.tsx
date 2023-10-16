@@ -3,6 +3,7 @@
 import { houseById } from "@/app/queries";
 import Link from "next/link";
 
+
 export default async function ShowSitter({
   params,
 }: {
