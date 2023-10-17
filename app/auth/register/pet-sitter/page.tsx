@@ -17,7 +17,6 @@ export default async function PetSitter() {
     const role_id = formData.get("roleId");
 
     const name = formData.get("houseName");
-    const foto = formData.get("foto");
     const m2 = formData.get("m2");
     const description = formData.get("houseDescription");
     const price = formData.get("price");
@@ -37,11 +36,10 @@ export default async function PetSitter() {
       .from("houses")
       .insert({
         name: name,
-        foto: foto,
         m2: m2,
         description: description,
         price: price,
-        status: status,
+        status_id: status,
       });
     if (error || houseError) {
       throw new Error("An error occurred: " + error.message);
@@ -109,15 +107,6 @@ export default async function PetSitter() {
           placeholder="Name of your house"
           required
         />
-        <label className="text-md" htmlFor="foto">
-          Foto of your House
-        </label>
-        <input
-          className="input-text"
-          name="foto"
-          placeholder="Foto of your house"
-          required
-        />
         <label className="text-md" htmlFor="m2">
           How many m2 do you have?
         </label>
@@ -148,16 +137,7 @@ export default async function PetSitter() {
           placeholder="Price in €"
           required
         />
-        <label className="text-md" htmlFor="status">
-          Status
-        </label>
-        <input
-          className="input-text"
-          type="text"
-          name="status"
-          placeholder="Status"
-          required
-        />
+        <input type="hidden" name="status" value="1" />
         <button className="bg-green-700 rounded px-4 py-2 text-white mb-2">
           Register
         </button>

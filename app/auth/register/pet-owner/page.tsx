@@ -17,7 +17,6 @@ export default async function PetOwner() {
     const role_id = formData.get("roleId");
 
     const name = formData.get("petName");
-    // const foto = formData.get("petFoto");
     const age = formData.get("petAge");
     const description = formData.get("petDescription");
     const breed = formData.get("petBreed");
@@ -33,7 +32,6 @@ export default async function PetOwner() {
 
     const { data, error: petsError } = await supabase.from("pets").insert({
       name: name,
-      // foto: foto,
       age: age,
       description: description,
       breed: breed,
@@ -111,15 +109,6 @@ export default async function PetOwner() {
           placeholder="Name"
           required
         />
-        {/* <label className="text-md" htmlFor="petFoto">
-          Foto of your Pet
-        </label>
-        <input
-          className="input-text"
-          name="petFoto"
-          placeholder="Foto"
-          required
-        /> */}
         <label className="text-md" htmlFor="petAge">
           Age
         </label>

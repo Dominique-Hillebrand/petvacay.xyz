@@ -84,7 +84,12 @@ export const houseDetailsFromCurrentUser = async function () {
     if (currentUserData) {
       const { data, error } = await supabase
         .from("houses")
-        .select("*")
+        .select(
+          `
+        *, 
+        status (*)
+        `
+        )
         .eq("owner_id", currentUserData.user.id);
 
       if (error) throw new Error(error.message);
@@ -119,13 +124,13 @@ export const houseDetailsFromCurrentUser = async function () {
 //     );
 //   }
 
-
 export const allHouses = async function () {
   const supabase = createServerComponentClient({ cookies });
   try {
     const { data, error } = await supabase.from("houses").select(`
         *, 
-        profiles (*)
+        profiles (*),
+        status (*)
         `);
     // .eq("status", open);
     if (error) throw new Error(error.message);
@@ -144,7 +149,8 @@ export const houseById = async function (id) {
       .select(
         `
           *, 
-          profiles (*)
+          profiles (*),
+          status (*)
           `
       )
       .eq("id", id);
@@ -168,7 +174,7 @@ export const houseById = async function (id) {
     console.error("Error all houses:", error.message);
     throw error;
   }
-}
+};
 
 // get all files from the users bucket
 export const allFilesFromUser = async function () {

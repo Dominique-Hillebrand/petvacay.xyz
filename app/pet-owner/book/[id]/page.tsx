@@ -11,31 +11,34 @@ export default async function BookSitter({
   let house = await houseById(params.id);
   return (
     <main>
-      <h1 className="text-green-700">You have successfully booked</h1>
-      <h3 className="text-green-700">{house[0].name}</h3>
-      <p>{house[0].foto}</p>
+      <h2 className="text-green-700">You have sent a booking request to:</h2>
+      <h3 className="text-green-700">{house.name}</h3>
       <p className="italic">Description:</p>
-      <p className="ml-6">{house[0].description}</p>
-      {house[0].profiles && (
+      <p className="ml-6">{house.description}</p>
+      {house.profiles && (
         <>
           <br />
           <p className="italic">Contact Details:</p>
           <p className="ml-6">
-            {house[0].profiles.first_name} {house[0].profiles.last_name}
+            {house.profiles.first_name} {house.profiles.last_name}
           </p>
-          <p className="ml-6">{house[0].profiles.address}</p>
-          <p className="ml-6">{house[0].profiles.number}</p>
+          <p className="ml-6">{house.profiles.address}</p>
+          <p className="ml-6">{house.profiles.number}</p>
         </>
       )}
       <br />
-      <p>{house[0].m2} m2</p>
-      <h4 className="text-green-700">price/night: {house[0].price} €</h4>
-      {/* <p className="mb-10 button-gray w-[100px] text-center">
-        {house[0].status}
-      </p> */}
+      <p>{house.m2} m2</p>
+      <p>price/night: {house.price} €</p>
+      <p className="mb-10 button-gray w-[100px] text-center">
+        {house.status.name}
+      </p>
       {/* <Link href={`/pet-owner/book/${house.id}`} className="button-green">
         Contact 
       </Link> */}
+      <h4 className="text-orange-700">
+        Wait for the confirmation of {house.profiles.first_name}{" "}
+        {house.profiles.last_name}
+      </h4>
     </main>
   );
 }

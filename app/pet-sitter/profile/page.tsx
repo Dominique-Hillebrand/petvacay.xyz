@@ -11,7 +11,6 @@ export default async function ProfilePetSitter() {
   if (userData) {
     houseData = await houseDetailsFromCurrentUser();
   }
-
   return (
     <main>
       <h1 className="mb-6">Your Data</h1>
@@ -26,12 +25,11 @@ export default async function ProfilePetSitter() {
       <FotosHouses userId={userData[0].id} />
       <div className="grid grid-cols-2 max-w-[500px] mb-8">
         <p>House Name: </p> <p>{houseData[0].name}</p>
-        <p>Foto: </p> <p>{houseData[0].foto}</p>
         <p>How much space do you have for the pet:</p>{" "}
         <p> {houseData[0].m2} m2</p>
         <p>Description:</p> <p> {houseData[0].description}</p>
         <p>Price:</p> <p> {houseData[0].price} €</p>
-        <p>Status:</p> <p> {houseData[0].status}</p>
+        <p>Status:</p> <p> {houseData[0].status.name}</p>
       </div>
     </main>
   );
