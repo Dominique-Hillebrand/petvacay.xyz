@@ -46,7 +46,7 @@ export default async function PetSitter() {
     if (error || houseError) {
       throw new Error("An error occurred: " + error.message);
     } else {
-      redirect("/pet-sitter/home");
+      redirect("/pet-sitter/profile");
     }
   };
 
