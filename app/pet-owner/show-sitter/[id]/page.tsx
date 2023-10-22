@@ -2,7 +2,8 @@
 
 import { houseById } from "@/app/queries";
 import Link from "next/link";
-
+import { Booking } from "@/components/Booking";
+import { DateCalender } from "@/components/DateCalender";
 
 export default async function ShowSitter({
   params,
@@ -60,9 +61,11 @@ export default async function ShowSitter({
       <p className="mb-10 button-gray w-[100px] text-center">
         {house.status.name}
       </p>
-      <Link href={`/pet-owner/book/${house.id}`} className="button-green">
+      {/* <Link href={`/pet-owner/book/${house.id}`} className="button-green">
         Book
-      </Link>
+      </Link> */}
+      {/* <Booking id={house.owner_id} /> */}
+      {/* <DateCalender /> */}
     </main>
   );
 }

@@ -1,5 +1,8 @@
 import './globals.css'
 import Header from "../components/Header";
+import "@mantine/core/styles.css";
+
+import { MantineProvider, ColorSchemeScript } from "@mantine/core";
 export const dynamic = "force-dynamic";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -7,7 +10,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body className="bg-black m-6">
         <Header />
-        {children}
+        <MantineProvider>{children}</MantineProvider>
       </body>
     </html>
   );
