@@ -7,6 +7,7 @@ import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 
 export default function Book({ houseId }: { houseId: number }) {
   const [value, setValue] = useState<[Date | null, Date | null]>([null, null]);
+  const [bookingCompleted, setBookingCompleted] = useState(false);
 
   const handleDateSelect = (dateRange: [Date | null, Date | null]) => {
     setValue(dateRange);
@@ -37,7 +38,7 @@ export default function Book({ houseId }: { houseId: number }) {
             house_id: houseId,
             pet_id: petsId[0].id,
           });
-        console.log(dates, datesError);
+        !datesError && setBookingCompleted(true);
       }
     }
   };
@@ -51,7 +52,13 @@ export default function Book({ houseId }: { houseId: number }) {
             }`
           : "No date range selected"}
       </h6>
-      <button onClick={handleBooking}>Select and save Dates</button>
+      {!bookingCompleted ? (
+        <button className="button-green" onClick={handleBooking}>
+          Send booking request!
+        </button>
+      ) : (
+        <h4 className="text-green-700">Booking request sent!</h4>
+      )}
     </>
   );
 }
