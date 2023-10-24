@@ -20,7 +20,6 @@ export default async function PetSitter() {
     const m2 = formData.get("m2");
     const description = formData.get("houseDescription");
     const price = formData.get("price");
-    const status = formData.get("status");
 
     const supabase = createServerActionClient({ cookies });
     const { data, error } = await supabase.from("profiles").insert({
@@ -39,7 +38,6 @@ export default async function PetSitter() {
         m2: m2,
         description: description,
         price: price,
-        status_id: status,
       });
     if (error || houseError) {
       throw new Error("An error occurred: " + error.message);
@@ -137,7 +135,6 @@ export default async function PetSitter() {
           placeholder="Price in €"
           required
         />
-        <input type="hidden" name="status" value="1" />
         <button className="bg-green-700 rounded px-4 py-2 text-white mb-2">
           Register
         </button>

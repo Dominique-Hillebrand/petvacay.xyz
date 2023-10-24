@@ -29,9 +29,6 @@ export default async function BookSitter({
       <br />
       <p>{house.m2} m2</p>
       <p>price/night: {house.price} €</p>
-      <p className="mb-10 button-gray w-[100px] text-center">
-        {house.status.name}
-      </p>
       {/* <Link href={`/pet-owner/book/${house.id}`} className="button-green">
         Contact 
       </Link> */}

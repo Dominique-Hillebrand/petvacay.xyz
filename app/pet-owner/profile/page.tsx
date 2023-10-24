@@ -2,7 +2,7 @@
 
 import { currentUserProfiles } from "@/app/queries";
 import { petDetailsFromCurrentUser } from "@/app/queries";
-import Avatar from "@/components/Avatar";
+import FotosPets from "@/components/FotosPets";
 
 export default async function ProfilePetOwner() {
   const userData = await currentUserProfiles();
@@ -28,7 +28,7 @@ export default async function ProfilePetOwner() {
         <p>Breed:</p> <p> {petData[0].breed}</p>
       </div>
       <div className="">
-        <Avatar userId={userData[0].id} />
+        <FotosPets userId={userData[0]?.id} />
       </div>
     </main>
   );

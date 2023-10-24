@@ -84,12 +84,7 @@ export const houseDetailsFromCurrentUser = async function () {
     if (currentUserData) {
       const { data, error } = await supabase
         .from("houses")
-        .select(
-          `
-        *, 
-        status (*)
-        `
-        )
+        .select(`*`)
         .eq("owner_id", currentUserData.user.id);
 
       if (error) throw new Error(error.message);
@@ -129,8 +124,7 @@ export const allHouses = async function () {
   try {
     const { data, error } = await supabase.from("houses").select(`
         *, 
-        profiles (*),
-        status (*)
+        profiles (*)
         `);
     // .eq("status", open);
     if (error) throw new Error(error.message);
@@ -149,8 +143,7 @@ export const houseById = async function (id) {
       .select(
         `
           *, 
-          profiles (*),
-          status (*)
+          profiles (*)
           `
       )
       .eq("id", id);
@@ -297,3 +290,25 @@ async function listAllFileUrlsFromBucket(bucketName, id) {
     return filteredUrls;
   }
 }
+
+// async function getPetFotosByOwnerId() {
+//       try {
+//         const { data: fileData, error: fileError } = supabase.storage
+//           .from("houses")
+//           .getPublicUrl(`${userId}/${file.name}`);
+
+//         if (fileError) {
+//           console.error(
+//             "Error getting public URL for file:",
+//             file.name,
+//             fileError.message
+//           );
+//           return null;
+//         }
+//         return fileData.publicUrl;
+//       } catch (error) {
+//         console.error("An error occurred:", error.message);
+//         return null;
+//       }
+//     })
+//   );

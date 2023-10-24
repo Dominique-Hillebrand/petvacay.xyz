@@ -2,6 +2,7 @@
 
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
+import ConfirmDenyButton from "./ConfirmDenyButton";
 
 export default async function Home() {
   const supabase = createServerComponentClient({ cookies });
@@ -14,14 +15,13 @@ export default async function Home() {
 
   const { data: datesAndPetsData, error: datesAndPetsDataError } =
     await supabase
-      .from("dates")
+      .from("requests")
       .select(`*, pets (*)`)
-      .eq("house_id", currentUser[0].houses[0].id);
-
+      .eq("house_id", currentUser[0]?.houses[0].id);
   const { data: petOwnerData, error: petOwnerError } = await supabase
     .from(`profiles`)
     .select(`*`)
-    .eq("id", datesAndPetsData[0].pets.owner_id);
+    .eq("id", datesAndPetsData[0]?.pets.owner_id);
 
   if (error) throw new Error(error.message);
 
@@ -34,29 +34,39 @@ export default async function Home() {
     });
   }
 
-  const startDate = formatDateString(datesAndPetsData[0].start);
-  const endDate = formatDateString(datesAndPetsData[0].end);
+  const startDate = formatDateString(datesAndPetsData[0]?.start);
+  const endDate = formatDateString(datesAndPetsData[0]?.end);
   return (
     <div>
-      <h1>You have a new booking request</h1>
-      <p>
-        from {startDate} - {endDate}
-      </p>
-      <div className="my-6">
-        <p>{datesAndPetsData[0].pets.name}</p>
-        <p>{datesAndPetsData[0].pets.age}</p>
-        <p>{datesAndPetsData[0].pets.description}</p>
-        <p>{datesAndPetsData[0].pets.breed}</p>
-      </div>
-      <div>
-        <p>Owner:</p>
-        <p>
-          {petOwnerData[0].first_name} {petOwnerData[0].last_name}
-        </p>
-        <p>{petOwnerData[0].address}</p>
-        <p>{petOwnerData[0].number}</p>
-      </div>
-      <button className="button-green">Confirm!</button>
+      {datesAndPetsData?.length > 0 ? (
+        <>
+          <h1>You have a new booking request</h1>
+          <p>
+            from {startDate} - {endDate}
+          </p>
+          {datesAndPetsData && (
+            <div className="my-6">
+              <p>{datesAndPetsData[0]?.pets.name}</p>
+              <p>{datesAndPetsData[0]?.pets.age}</p>
+              <p>{datesAndPetsData[0]?.pets.description}</p>
+              <p>{datesAndPetsData[0]?.pets.breed}</p>
+            </div>
+          )}
+          {petOwnerData && (
+            <div>
+              <p>Owner:</p>
+              <p>
+                {petOwnerData[0]?.first_name} {petOwnerData[0]?.last_name}
+              </p>
+              <p>{petOwnerData[0]?.address}</p>
+              <p>{petOwnerData[0]?.number}</p>
+            </div>
+          )}
+          <ConfirmDenyButton requestId={datesAndPetsData[0]?.id} />
+        </>
+      ) : (
+        <p>No new message.</p>
+      )}
     </div>
   );
 }

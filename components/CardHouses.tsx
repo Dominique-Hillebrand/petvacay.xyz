@@ -137,7 +137,6 @@ export default async function CardHouses() {
   // );
 
   const allData = await getFotosUrl(houses);
-  // console.log("❤️", allData);
   return (
     <>
       {allData?.map((house) => {
@@ -192,7 +191,7 @@ export default async function CardHouses() {
             </div>
             <div>
               <p>price/night: {house.price} €</p>
-              <p>{house.status.name}</p>
+              {/* <p>{house.status.name}</p> */}
               <Link
                 href={`/pet-owner/show-sitter/${house.id}`}
                 className="button-black"

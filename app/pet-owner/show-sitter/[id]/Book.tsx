@@ -31,13 +31,16 @@ export default function Book({ houseId }: { houseId: number }) {
       //Upload Data
       if (petsId) {
         const { data: dates, error: datesError } = await supabase
-          .from("dates")
+          .from("requests")
           .insert({
             start: startDateAsString,
             end: endDateAsString,
             house_id: houseId,
             pet_id: petsId[0].id,
-          });
+            status: 1,
+          })
+          .select();
+        console.log(dates);
         !datesError && setBookingCompleted(true);
       }
     }
