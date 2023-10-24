@@ -242,7 +242,7 @@ export async function getFotosUrl(houses) {
   return data;
 }
 
-async function listAllFileUrlsFromBucket(bucketName, id) {
+export async function listAllFileUrlsFromBucket(bucketName, id) {
   const supabase = createServerComponentClient({ cookies });
 
   try {
@@ -291,24 +291,78 @@ async function listAllFileUrlsFromBucket(bucketName, id) {
   }
 }
 
-// async function getPetFotosByOwnerId() {
-//       try {
-//         const { data: fileData, error: fileError } = supabase.storage
-//           .from("houses")
-//           .getPublicUrl(`${userId}/${file.name}`);
+// export async function getPetFotosByOwnerId(userId) {
+//   const supabase = createServerComponentClient({ cookies });
+//   try {
+//     const { data: fileList, error: listError } = await supabase.storage
+//     .from("pets")
+//     .list(userId, {
+//       limit: 100,
+//       offset: 0,
+//       sortBy: { column: "name", order: "asc" },
+//     });
+//     if (error) {
+//       console.error("Error listing files:", error.message);
+//       return [];
+//     }
 
-//         if (fileError) {
-//           console.error(
-//             "Error getting public URL for file:",
-//             file.name,
-//             fileError.message
-//           );
+//     const urls = await publicUrls(fileList);
+
+//     return urls;
+//   } catch (error) {
+//     console.error("An error occurred:", error.message);
+//     return [];
+//   }
+
+//   async function publicUrls(files) {
+//     const urls = await Promise.all(
+//       files.map(async (file) => {
+//         try {
+//           const { data: fileData, error: fileError } = supabase.storage
+//             .from("pets")
+//             .getPublicUrl(`${userId}/${file.name}`);
+
+//           if (fileError) {
+//             console.error(
+//               "Error getting public URL for file:",
+//               file.name,
+//               fileError.message
+//             );
+//             return null;
+//           }
+//           return fileData.publicUrl;
+//         } catch (error) {
+//           console.error("An error occurred:", error.message);
 //           return null;
 //         }
-//         return fileData.publicUrl;
-//       } catch (error) {
-//         console.error("An error occurred:", error.message);
-//         return null;
-//       }
-//     })
-//   );
+//       })
+//     );
+//     const filteredUrls = urls.filter((url) => url !== null);
+//     console.log("All public URLs:", filteredUrls);
+
+//     return filteredUrls;
+//   }
+// }
+
+  // if (listError) {
+  //   // Handle the error
+  //   console.error("Error listing files:", listError);
+  // } else {
+  //   const publicUrls = [];
+
+  //   for (const file of fileList) {
+  //     const { data: fileData, error: fileError } = supabase.storage
+  //       .from("pets")
+  //       .getPublicUrl(`${userId}/${file.name}`);
+
+  //     if (fileError) {
+  //       // Handle the error
+  //       console.error(`Error getting public URL for ${file.name}:`, fileError);
+  //     } else {
+  //       publicUrls.push(fileData.publicURL);
+  //     }
+  //   }
+
+  //   // Now, publicUrls contains an array of public URLs for all files in the folder.
+  //   console.log("Public URLs:", publicUrls);
+  // }

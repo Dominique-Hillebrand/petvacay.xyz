@@ -3,6 +3,7 @@
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import ConfirmDenyButton from "./ConfirmDenyButton";
+import { listAllFileUrlsFromBucket } from "@/app/queries";
 
 export default async function Home() {
   const supabase = createServerComponentClient({ cookies });
@@ -36,6 +37,9 @@ export default async function Home() {
 
   const startDate = formatDateString(datesAndPetsData[0]?.start);
   const endDate = formatDateString(datesAndPetsData[0]?.end);
+  const fotos = await listAllFileUrlsFromBucket("pets", petOwnerData[0]?.id);
+  console.log("fotos", fotos[0]);
+
   return (
     <div>
       {datesAndPetsData?.length > 0 ? (
@@ -52,6 +56,21 @@ export default async function Home() {
               <p>{datesAndPetsData[0]?.pets.breed}</p>
             </div>
           )}
+
+          {fotos && fotos.length > 0 && (
+            <div className="flex">
+              {fotos.map((url, index) => (
+                <img
+                  key={`pet-${index}`}
+                  src={url}
+                  alt={`Pet Image ${index}`}
+                  style={{ width: "100px", height: "100px", margin: "5px" }}
+                  className="object-cover"
+                />
+              ))}
+            </div>
+          )}
+
           {petOwnerData && (
             <div>
               <p>Owner:</p>
