@@ -32,7 +32,6 @@ export default function FotosPets({ userId }) {
         upsert: false,
       });
     console.log("uploaded file to storage", filePathFolder, file);
-    console.log("data", data, error);
     setFotoPath(data?.path);
   };
 

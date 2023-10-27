@@ -25,6 +25,9 @@ export default async function Header() {
               </Link>
               <Link href="/pet-owner/profile" className="button-black">
                 Profile
+              </Link>{" "}
+              <Link href="/pet-owner/reservations" className="button-black">
+                Reservations
               </Link>
             </>
           )}

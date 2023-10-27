@@ -222,7 +222,7 @@ export const publicUrls = async function (data) {
   return filteredUrls;
 };
 
-// get fotos of houses and avatars and return the newData with alll information
+// get fotos of houses and avatars and return the newData with ALL information
 export async function getFotosUrl(houses) {
   const data = await Promise.all(
     houses?.map(async (house) => {

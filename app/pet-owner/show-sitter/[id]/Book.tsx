@@ -40,7 +40,7 @@ export default function Book({ houseId }: { houseId: number }) {
             status: 1,
           })
           .select();
-        console.log(dates);
+        // console.log(dates);
         !datesError && setBookingCompleted(true);
       }
     }

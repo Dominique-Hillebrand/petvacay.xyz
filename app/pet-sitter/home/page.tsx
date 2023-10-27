@@ -11,7 +11,7 @@ export default async function Home() {
   const { data, error } = await supabase.auth.getUser();
   const { data: currentUser, error: currentUserError } = await supabase
     .from(`profiles`)
-    .select(`*, houses (id)`)
+    .select(`*, houses (*)`)
     .eq("id", data.user.id);
 
   const { data: datesAndPetsData, error: datesAndPetsDataError } =
@@ -19,10 +19,6 @@ export default async function Home() {
       .from("requests")
       .select(`*, pets (*)`)
       .eq("house_id", currentUser[0]?.houses[0].id);
-  const { data: petOwnerData, error: petOwnerError } = await supabase
-    .from(`profiles`)
-    .select(`*`)
-    .eq("id", datesAndPetsData[0]?.pets.owner_id);
 
   if (error) throw new Error(error.message);
 
@@ -34,58 +30,169 @@ export default async function Home() {
       day: "2-digit",
     });
   }
+  const consolidatedData = await Promise.all(
+    datesAndPetsData.map(async (item) => {
+      const { data: petOwnerData, error: petOwnerError } = await supabase
+        .from(`profiles`)
+        .select(`*`)
+        .eq("id", item.pets.owner_id);
 
-  const startDate = formatDateString(datesAndPetsData[0]?.start);
-  const endDate = formatDateString(datesAndPetsData[0]?.end);
-  const fotos = await listAllFileUrlsFromBucket("pets", petOwnerData[0]?.id);
-  console.log("fotos", fotos[0]);
+      const owner = petOwnerData[0];
+      const fotos = await listAllFileUrlsFromBucket("pets", owner.id);
+
+      // Fetch the status data for the current request
+      const { data: statusData, error: statusError } = await supabase
+        .from("status")
+        .select("*")
+        .eq("id", item.status);
+
+      const { data: houseData } = await supabase
+        .from("houses")
+        .select("price")
+        .eq("id", item.house_id);
+
+      const startDate = formatDateString(item.start);
+      const endDate = formatDateString(item.end);
+      return {
+        ...item,
+        petOwner: owner,
+        fotos: fotos,
+        status: statusData[0],
+        price: houseData[0].price,
+        startDate: startDate,
+        endDate: endDate,
+      };
+    })
+  );
+  // console.log(consolidatedData);
 
   return (
-    <div>
-      {datesAndPetsData?.length > 0 ? (
-        <>
-          <h1>You have a new booking request</h1>
-          <p>
-            from {startDate} - {endDate}
-          </p>
-          {datesAndPetsData && (
-            <div className="my-6">
-              <p>{datesAndPetsData[0]?.pets.name}</p>
-              <p>{datesAndPetsData[0]?.pets.age}</p>
-              <p>{datesAndPetsData[0]?.pets.description}</p>
-              <p>{datesAndPetsData[0]?.pets.breed}</p>
-            </div>
-          )}
+    <main>
+      <section>
+        {consolidatedData.some((item) => item.status.id === 1) ? (
+          <div>
+            <h1>You have new booking requests</h1>
+            <p>--hit confirm or deny --</p>
+            {consolidatedData
+              .filter((item) => item.status.id === 1)
+              .map((item) => (
+                <div
+                  key={item.id}
+                  className="border-2 border-gray-700 grid grid-cols-4 gap-8 mb-8 p-4 "
+                >
+                  <div className="">
+                    {item.fotos.map((url, fotoIndex) => (
+                      <img
+                        key={`pet-image-${fotoIndex}`}
+                        src={url}
+                        alt={`Pet Image ${fotoIndex}`}
+                        style={{
+                          width: "100px",
+                          height: "100px",
+                          margin: "5px",
+                        }}
+                        className="object-cover flex"
+                      />
+                    ))}
+                  </div>
 
-          {fotos && fotos.length > 0 && (
-            <div className="flex">
-              {fotos.map((url, index) => (
-                <img
-                  key={`pet-${index}`}
-                  src={url}
-                  alt={`Pet Image ${index}`}
-                  style={{ width: "100px", height: "100px", margin: "5px" }}
-                  className="object-cover"
-                />
+                  <div className="mb-6">
+                    <p className="text-3xl">{item.pets.name}</p>
+                    <p>{item.pets.age} year/s</p>
+                    <p>{item.pets.breed}</p>
+                    <p className="italic text-gray-500">Description:</p>
+                    <p>{item.pets.description}</p>
+                  </div>
+                  <div className="mb-6">
+                    <p className="italic text-gray-500">Owner:</p>
+                    <p>
+                      {item.petOwner.first_name} {item.petOwner.last_name}
+                    </p>
+                    <p>{item.petOwner.address}</p>
+                    <p>{item.petOwner.number}</p>
+                  </div>
+                  <div>
+                    <p className="text-green-500 text-xl">
+                      {item.startDate} - {item.endDate}
+                    </p>
+                    <p className="mb-6 text-green-500">{item.price} €</p>
+                    <p className="text-green-500 w-24">{item.name}</p>
+                    <ConfirmDenyButton requestId={item.status.id} />
+                  </div>
+                </div>
               ))}
-            </div>
-          )}
+          </div>
+        ) : (
+          <p className="text-gray-500">-- No open booking requests. --</p>
+        )}
+      </section>
+      <section>
+        {consolidatedData.some((item) => item.status.id !== 1) ? (
+          <div>
+            <h4 className="mt-16">Reservation History:</h4>
+            {consolidatedData
+              .filter((item) => item.status.id !== 1)
+              .map((item) => (
+                <div
+                  key={item.id}
+                  className="border-2 border-gray-700 grid grid-cols-4 gap-8 mb-8 p-4 "
+                >
+                  <div className="">
+                    {item.fotos.map((url, fotoIndex) => (
+                      <img
+                        key={`pet-image-${fotoIndex}`}
+                        src={url}
+                        alt={`Pet Image ${fotoIndex}`}
+                        style={{
+                          width: "100px",
+                          height: "100px",
+                          margin: "5px",
+                        }}
+                        className="object-cover flex"
+                      />
+                    ))}
+                  </div>
 
-          {petOwnerData && (
-            <div>
-              <p>Owner:</p>
-              <p>
-                {petOwnerData[0]?.first_name} {petOwnerData[0]?.last_name}
-              </p>
-              <p>{petOwnerData[0]?.address}</p>
-              <p>{petOwnerData[0]?.number}</p>
-            </div>
-          )}
-          <ConfirmDenyButton requestId={datesAndPetsData[0]?.id} />
-        </>
-      ) : (
-        <p>No new message.</p>
-      )}
-    </div>
+                  <div className="mb-6">
+                    <p className="text-3xl">{item.pets.name}</p>
+                    <p>{item.pets.age} year/s</p>
+                    <p>{item.pets.breed}</p>
+                    <p className="italic text-gray-500">Description:</p>
+                    <p>{item.pets.description}</p>
+                  </div>
+                  <div className="mb-6">
+                    <p className="italic text-gray-500">Owner:</p>
+                    <p>
+                      {item.petOwner.first_name} {item.petOwner.last_name}
+                    </p>
+                    <p>{item.petOwner.address}</p>
+                    <p>{item.petOwner.number}</p>
+                  </div>
+                  <div>
+                    <p className="text-green-500 text-xl">
+                      {item.startDate} - {item.endDate}
+                    </p>
+                    <p className="mb-6 text-green-500">{item.price} €</p>
+                    <p className="text-green-500 w-24">{item.name}</p>
+                    <p
+                      className={`w-[100px] ${
+                        item.status.id === 2
+                          ? "button-green"
+                          : item.status.id === 3
+                          ? "button-gray"
+                          : ""
+                      }`}
+                    >
+                      {item.status.name}
+                    </p>
+                  </div>
+                </div>
+              ))}
+          </div>
+        ) : (
+          <p className="text-gray-900">-- No booking history. --</p>
+        )}
+      </section>
+    </main>
   );
 }
