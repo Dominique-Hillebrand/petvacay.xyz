@@ -169,10 +169,20 @@ export default async function Home() {
                     <p>{item.petOwner.number}</p>
                   </div>
                   <div>
-                    <p className="text-green-500 text-xl">
+                    <p
+                      className={`text-${
+                        item.status.id === 2 ? "green" : "gray"
+                      }-500 text-xl`}
+                    >
                       {item.startDate} - {item.endDate}
                     </p>
-                    <p className="mb-6 text-green-500">{item.price} €</p>
+                    <p
+                      className={`text-${
+                        item.status.id === 2 ? "green" : "gray"
+                      }-500 mb-6`}
+                    >
+                      {item.price} €
+                    </p>
                     <p className="text-green-500 w-24">{item.name}</p>
                     <p
                       className={`w-[100px] ${
