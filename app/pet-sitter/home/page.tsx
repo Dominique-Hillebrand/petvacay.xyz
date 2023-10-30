@@ -64,7 +64,6 @@ export default async function Home() {
       };
     })
   );
-  // console.log(consolidatedData);
 
   return (
     <main>
@@ -135,7 +134,7 @@ export default async function Home() {
               .map((item) => (
                 <div
                   key={item.id}
-                  className="border-2 border-gray-700 grid grid-cols-4 gap-8 mb-8 p-4 "
+                  className="border-2 border-gray-700 grid grid-cols-2 md:grid-cols-4 gap-8 mb-8 p-4 "
                 >
                   <div className="">
                     {item.fotos.map((url, fotoIndex) => (
@@ -154,19 +153,35 @@ export default async function Home() {
                   </div>
 
                   <div className="mb-6">
-                    <p className="text-3xl">{item.pets.name}</p>
-                    <p>{item.pets.age} year/s</p>
-                    <p>{item.pets.breed}</p>
+                    <p
+                      className={`text-${
+                        item.status.id === 2 ? "green" : "gray"
+                      }-500 text-3xl`}
+                    >
+                      {item.pets.name}
+                    </p>
+                    <p className={`text-${item.status.id === 3 && "gray"}-500`}>
+                      {item.pets.age} year/s
+                    </p>
+                    <p className={`text-${item.status.id === 3 && "gray"}-500`}>
+                      {item.pets.breed}
+                    </p>
                     <p className="italic text-gray-500">Description:</p>
-                    <p>{item.pets.description}</p>
+                    <p className={`text-${item.status.id === 3 && "gray"}-500`}>
+                      {item.pets.description}
+                    </p>
                   </div>
                   <div className="mb-6">
                     <p className="italic text-gray-500">Owner:</p>
-                    <p>
+                    <p className={`text-${item.status.id === 3 && "gray"}-500`}>
                       {item.petOwner.first_name} {item.petOwner.last_name}
                     </p>
-                    <p>{item.petOwner.address}</p>
-                    <p>{item.petOwner.number}</p>
+                    <p className={`text-${item.status.id === 3 && "gray"}-500`}>
+                      {item.petOwner.address}
+                    </p>
+                    <p className={`text-${item.status.id === 3 && "gray"}-500`}>
+                      {item.petOwner.number}
+                    </p>
                   </div>
                   <div>
                     <p

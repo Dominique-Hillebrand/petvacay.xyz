@@ -105,7 +105,7 @@ export default function Avatar({ userId }) {
         className="signUp-form"
         style={{ display: publicUrlsArray.length < 3 ? "flex" : "none" }}
       >
-        <h6>Upload 3 Fotos here:</h6>
+        <h6>Upload 3 Fotos of yourself here:</h6>
         <input type="file" name="image" onChange={handleFileSelected} />
         <button type="submit" className="button-gray max-w-[300px]">
           Upload image

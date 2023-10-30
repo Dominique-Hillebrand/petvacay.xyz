@@ -63,7 +63,7 @@ export default async function CardHouses() {
             </section>
 
             <section>
-              <p className="text-xl mb-10">price/night: {house.price} €</p>
+              <p className="text-xl mb-8">price/night: {house.price} €</p>
               <Link
                 href={`/pet-owner/show-sitter/${house.id}`}
                 className="button-gray"

@@ -58,8 +58,6 @@ export default async function Reservations() {
     })
   );
 
-  console.log(requestDataWithAdditionalInfo);
-
   if (error) throw new Error(error.message);
 
   function formatDateString(dateString) {
@@ -78,7 +76,7 @@ export default async function Reservations() {
         {requestDataWithAdditionalInfo.map((item) => (
           <div
             key={item.id}
-            className="border-2 border-gray-700 grid grid-cols-4 gap-8 mb-8 p-4 "
+            className="border-2 border-gray-700 grid grid-cols-1 md:grid-cols-4 gap-8 mb-8 p-4 "
           >
             <div className="flex">
               <div className="mr-4">
