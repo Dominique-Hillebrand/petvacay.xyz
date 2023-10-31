@@ -64,7 +64,6 @@ export default async function Home() {
       };
     })
   );
-
   return (
     <main>
       <section>
@@ -116,7 +115,7 @@ export default async function Home() {
                     </p>
                     <p className="mb-6 text-green-500">{item.price} €</p>
                     <p className="text-green-500 w-24">{item.name}</p>
-                    <ConfirmDenyButton requestId={item.status.id} />
+                    <ConfirmDenyButton requestId={item.id} />
                   </div>
                 </div>
               ))}

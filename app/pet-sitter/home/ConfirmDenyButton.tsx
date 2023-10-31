@@ -20,18 +20,18 @@ export default function ConfirmDenyButton({ requestId }) {
     setDenied(true);
     uploadStatus(3);
   };
+console.log("reqeustid", requestId);
+async function uploadStatus(statusId) {
+  const supabase = createClientComponentClient();
 
-  async function uploadStatus(statusId) {
-    const supabase = createClientComponentClient();
-
-    const { data: statusUpload, error: statusError } = await supabase
-      .from("requests")
-      .update({
-        status: statusId,
-      })
-      .eq("id", requestId);
-    console.log(statusUpload, statusError);
-  }
+  const { data: statusUpload, error: statusError } = await supabase
+    .from("requests")
+    .update({
+      status: statusId,
+    })
+    .eq("id", requestId);
+  console.log("status", statusUpload, statusError);
+}
 
   return (
     <>
