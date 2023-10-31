@@ -72,7 +72,7 @@ export default async function Reservations() {
 
   return (
     <main>
-      <h1>Reservation History</h1>
+      <h1 className="text-5xl md:text-7xl">Reservation History</h1>
       <RealtimeData allData={requestDataWithAdditionalInfo} />
     </main>
   );

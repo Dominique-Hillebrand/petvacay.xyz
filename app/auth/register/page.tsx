@@ -3,7 +3,7 @@ import Link from "next/link";
 export default function Register() {
   return (
     <main className="text-center">
-      <h1 className="mb-12">REGISTER PAGE</h1>
+      <h1 className="text-5xl md:text-7xl mb-12">REGISTER PAGE</h1>
       <p className="mb-12">Do you want to register as a ... </p>
       <Link
         href="/auth/register/pet-owner"

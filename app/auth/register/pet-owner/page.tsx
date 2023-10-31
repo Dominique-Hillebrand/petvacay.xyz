@@ -52,7 +52,7 @@ export default async function PetOwner() {
 
   return (
     <main className="">
-      <h1 className="pb-8">Register your Pet:</h1>
+      <h1 className="text-5xl md:text-7xl pb-8">Register your Pet:</h1>
       <form className="signUp-form" action={addPersonPet} id="registrationForm">
         <label className="text-md" htmlFor="firstName">
           First Name

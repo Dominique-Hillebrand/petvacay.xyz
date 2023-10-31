@@ -14,7 +14,7 @@ export default async function ShowSitter({
   let house = await houseById(params.id);
   return (
     <main>
-      <h1> {house.name}</h1>
+      <p className="text-5xl md:text-7xl"> {house.name}</p>
 
       {house.houseFotos && house.houseFotos.length > 0 && (
         <div className="flex">

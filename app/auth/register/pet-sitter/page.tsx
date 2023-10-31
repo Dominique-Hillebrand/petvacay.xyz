@@ -48,7 +48,7 @@ export default async function PetSitter() {
 
   return (
     <main className="">
-      <h1 className="pb-8">Register your House:</h1>
+      <h1 className="text-5xl md:text-7xl pb-8">Register your House:</h1>
       <form className="signUp-form" action={addPersonHouse}>
         <label className="text-md" htmlFor="firstName">
           First Name

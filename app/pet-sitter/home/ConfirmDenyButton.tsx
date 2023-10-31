@@ -45,9 +45,9 @@ async function uploadStatus(statusId) {
           </button>
         </div>
       ) : confirmed ? (
-        <h4 className="text-green-700">You confirmed!</h4>
+        <h4 className="text-2xl md:text-4xltext-green-700">You confirmed!</h4>
       ) : (
-        <h4 className="text-gray-700">You denied!</h4>
+        <h4 className="text-2xl md:text-4xltext-gray-700">You denied!</h4>
       )}
     </>
   );

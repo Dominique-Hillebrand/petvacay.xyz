@@ -50,7 +50,7 @@ export default function Book({ houseId }: { houseId: number }) {
       <div className="bg-gray-800">
         <DateCalender onDateSelect={handleDateSelect} />
       </div>
-      <h6 className="pt-8">
+      <h6 className="text-xl md:text-2xl pt-8">
         {value[0]
           ? `Selected Date: ${value[0].toLocaleDateString()} - ${
               value[1]?.toLocaleDateString() ?? "No date selected"

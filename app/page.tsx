@@ -2,8 +2,10 @@ export default async function Index() {
   return (
     <div>
       {/* <div className="animate-in opacity-0"> */}
-      <h1>PetVacay</h1>
-      <h5>Here you can find an petBnB for your best friend.</h5>
+      <h1 className="text-5xl md:text-7xl">PetVacay</h1>
+      <h5 className="text-xl md:text-3xl">
+        Here you can find an petBnB for your best friend.
+      </h5>
       <p>
         You are going on vacation and need to find someone to take care of your
         pet?

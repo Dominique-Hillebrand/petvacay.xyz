@@ -93,7 +93,7 @@ export default function RealtimeData({ allData }: { allData: any }) {
       <section>
         {allData.some((item: any) => item.status.id !== 1) ? (
           <div>
-            <h4 className="mt-16">Reservation History:</h4>
+            <h4 className="text-2xl md:text-4xl mt-16">Reservation History:</h4>
             {allData
               .filter((item: any) => item.status.id !== 1)
               .map((item: any) => (

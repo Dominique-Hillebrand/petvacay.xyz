@@ -13,14 +13,14 @@ export default async function ProfilePetSitter() {
   }
   return (
     <main>
-      <h1 className="mb-6">Your Data</h1>
+      <h1 className="text-5xl md:text-7xl mb-6">Your Data</h1>
       <div className="grid grid-cols-2 max-w-[500px] mb-6 ">
         <p>First Name:</p> <p> {userData[0]?.first_name}</p>
         <p>Last Name: </p> <p>{userData[0]?.last_name}</p>
         <p>Address: </p> <p> {userData[0]?.address}</p>
         <p>Tel. Nr.: </p> <p> {userData[0]?.number}</p>
       </div>
-      <h2 className="mb-6">Your House Data</h2>
+      <h2 className="text-4xl md:text-6xl mb-6">Your House Data</h2>
       <div className="grid grid-cols-2 max-w-[500px] mb-8">
         <p>House Name: </p> <p>{houseData[0]?.name}</p>
         <p>Available space for Pet:</p> <p> {houseData[0]?.m2} m2</p>
