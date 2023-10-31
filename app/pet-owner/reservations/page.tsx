@@ -3,6 +3,7 @@
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import { listAllFileUrlsFromBucket } from "@/app/queries";
+import RealtimeData from "./RealtimeData";
 
 export default async function Reservations() {
   const supabase = createServerComponentClient({ cookies });
@@ -72,91 +73,7 @@ export default async function Reservations() {
   return (
     <main>
       <h1>Reservation History</h1>
-      <section>
-        {requestDataWithAdditionalInfo.map((item) => (
-          <div
-            key={item.id}
-            className="border-2 border-gray-700 grid grid-cols-1 md:grid-cols-4 gap-8 mb-8 p-4 "
-          >
-            <div className="flex">
-              <div className="mr-4">
-                {item.ownerFotos.map((url, fotoIndex) => (
-                  <img
-                    key={`owner-image-${fotoIndex}`}
-                    src={url}
-                    alt={`owner Image ${fotoIndex}`}
-                    style={{
-                      width: "100px",
-                      height: "100px",
-                      margin: "5px",
-                    }}
-                    className="object-cover flex"
-                  />
-                ))}
-              </div>
-              <div>
-                {item.houseFotos.map((url, fotoIndex) => (
-                  <img
-                    key={`house-image-${fotoIndex}`}
-                    src={url}
-                    alt={`house Image ${fotoIndex}`}
-                    style={{
-                      width: "100px",
-                      height: "100px",
-                      margin: "5px",
-                    }}
-                    className="object-cover flex"
-                  />
-                ))}
-              </div>
-            </div>
-
-            <div className="mb-6">
-              <p className="text-3xl">{item.house.name}</p>
-              <p>{item.house.m2} m2</p>
-              {/* <p>{item.house.description}</p> */}
-              <p className="italic text-gray-500">Description:</p>
-              <p>{item.house.description}</p>
-            </div>
-            <div className="mb-6">
-              <p className="italic text-gray-500">Owner:</p>
-              <p>
-                {item.owner.first_name} {item.owner.last_name}
-              </p>
-              <p>{item.owner.address}</p>
-              <p>{item.owner.number}</p>
-            </div>
-            <div>
-              <p
-                className={`text-${
-                  item.status.id === 2 ? "green" : "gray"
-                }-500 text-xl`}
-              >
-                {item.startDate} - {item.endDate}
-              </p>
-              <p
-                className={`text-${
-                  item.status.id === 2 ? "green" : "gray"
-                }-500 mb-6`}
-              >
-                {item.house.price} €
-              </p>
-              {/* <p className="text-green-500 w-24">{item.name}</p> */}
-              <p
-                className={`w-[100px] ${
-                  item.status.id === 2
-                    ? "button-green"
-                    : item.status.id === 3 || 1
-                    ? "button-gray"
-                    : ""
-                }`}
-              >
-                {item.status.name}
-              </p>
-            </div>
-          </div>
-        ))}
-      </section>
+      <RealtimeData allData={requestDataWithAdditionalInfo} />
     </main>
   );
 }
