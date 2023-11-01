@@ -88,7 +88,7 @@ export default function RealtimeData({ allData }: any) {
             <p
               className={`text-${
                 item.status.id === 2 ? "green" : "gray"
-              }-500 text-xl`}
+              }-500 text-lg md:text-xl`}
             >
               {item.startDate} - {item.endDate}
             </p>

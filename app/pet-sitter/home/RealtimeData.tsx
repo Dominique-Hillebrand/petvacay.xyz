@@ -76,7 +76,7 @@ export default function RealtimeData({ allData }: { allData: any }) {
                     <p>{item.petOwner.number}</p>
                   </div>
                   <div>
-                    <p className="text-green-500 text-xl">
+                    <p className="text-green-500 text-lg md:text-xl">
                       {item.startDate} - {item.endDate}
                     </p>
                     <p className="mb-6 text-green-500">{item.price} €</p>
@@ -152,7 +152,7 @@ export default function RealtimeData({ allData }: { allData: any }) {
                     <p
                       className={`text-${
                         item.status.id === 2 ? "green" : "gray"
-                      }-500 text-xl`}
+                      }-500 text-lg md:text-xl`}
                     >
                       {item.startDate} - {item.endDate}
                     </p>

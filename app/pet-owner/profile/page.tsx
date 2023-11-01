@@ -20,7 +20,7 @@ export default async function ProfilePetOwner() {
         <p>Address: </p> <p> {userData[0].address}</p>
         <p>Tel. Nr.: </p> <p> {userData[0].number}</p>
       </div>
-      <h2 className="text-4xl md:text-6xl mb-6">Your pets Data</h2>
+      <h2 className="text-4xl md:text-6xl mb-6">Your Pets Data</h2>
       <div className="grid grid-cols-2 max-w-[300px] mb-8">
         <p>Pet Name: </p> <p>{petData[0].name}</p>
         <p>Age:</p> <p> {petData[0].age} years</p>

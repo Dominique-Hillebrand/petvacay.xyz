@@ -4,19 +4,21 @@ import Link from "next/link";
 import LogoutButton from "../components/LogoutButton";
 import { currentUserAuth } from "@/app/queries";
 import { roleIdCurrentUser } from "@/app/queries";
+import { currentUserProfiles } from "@/app/queries";
 
 export default async function Header() {
   const user = await currentUserAuth();
   let roleId = [];
+  let profile;
   if (user) {
     roleId = await roleIdCurrentUser();
+    profile = await currentUserProfiles();
   }
-
   return (
-    <header className="flex items-center mb-6">
+    <header className="flex items-center mb-8">
       {user ? (
         <>
-          Hey, {user.user.email}!
+          <p className="text-gray-500">Hey, {profile[0].first_name}!</p>
           <LogoutButton />
           {roleId.length > 0 && roleId[0].role_id == 1 && (
             <>
