@@ -1,24 +1,24 @@
 // @ts-nocheck
 
-import Link from "next/link";
-import LogoutButton from "../components/LogoutButton";
-import { currentUserAuth } from "@/app/queries";
-import { roleIdCurrentUser } from "@/app/queries";
-import { currentUserProfiles } from "@/app/queries";
+import Link from 'next/link'
+import LogoutButton from './LogoutButton'
+import { currentUserAuth } from '@/app/queries'
+import { roleIdCurrentUser } from '@/app/queries'
+import { currentUserProfiles } from '@/app/queries'
 
 export default async function Header() {
-  const user = await currentUserAuth();
-  let roleId = [];
-  let profile;
+  const user = await currentUserAuth()
+  let roleId = []
+  let profile
   if (user) {
-    roleId = await roleIdCurrentUser();
-    profile = await currentUserProfiles();
+    roleId = await roleIdCurrentUser()
+    profile = await currentUserProfiles()
   }
   return (
-    <header className="flex items-center mb-8">
+    <header className="flex items-center mb-6">
       {user ? (
         <>
-          <p className="text-gray-500">Hey, {profile[0].first_name}!</p>
+          <p>Hey, {profile[0].first_name}!</p>
           <LogoutButton />
           {roleId.length > 0 && roleId[0].role_id == 1 && (
             <>
@@ -27,7 +27,7 @@ export default async function Header() {
               </Link>
               <Link href="/pet-owner/profile" className="button-black">
                 Profile
-              </Link>{" "}
+              </Link>{' '}
               <Link href="/pet-owner/reservations" className="button-black">
                 Reservations
               </Link>
@@ -52,5 +52,5 @@ export default async function Header() {
         </>
       )}
     </header>
-  );
+  )
 }

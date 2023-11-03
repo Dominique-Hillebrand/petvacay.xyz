@@ -1,37 +1,39 @@
-"use client";
+'use client'
 //@ts-nocheck
 
-import React, { useState } from "react";
-import DateCalender from "@/components/DateCalender";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import React, { useState } from 'react'
+import DateCalender from '@/app/components/DateCalender'
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 
 export default function Book({ houseId }: { houseId: number }) {
-  const [value, setValue] = useState<[Date | null, Date | null]>([null, null]);
-  const [bookingCompleted, setBookingCompleted] = useState(false);
+  const [value, setValue] = useState<[Date | null, Date | null]>([null, null])
+  const [bookingCompleted, setBookingCompleted] = useState(false)
 
   const handleDateSelect = (dateRange: [Date | null, Date | null]) => {
-    setValue(dateRange);
-  };
+    setValue(dateRange)
+  }
 
   const handleBooking = async () => {
     if (value[0] && value[1]) {
-      const startDateAsString = value[0]?.toISOString();
-      const endDateAsString = value[1]?.toISOString();
+      const startDateAsString = value[0]?.toISOString()
+      const endDateAsString = value[1]?.toISOString()
 
       //getData from Database
-      const supabase = createClientComponentClient();
-      const { data, error: userError } = await supabase.auth.getUser();
-      const user = data.user?.id;
+      const supabase = createClientComponentClient()
+      const { data, error: userError } = await supabase.auth.getUser()
+      if (userError) throw new Error(userError.message)
+      const user = data.user?.id
 
       const { data: petsId, error: petsIdError } = await supabase
-        .from("pets")
+        .from('pets')
         .select(`id`)
-        .eq("owner_id", user);
+        .eq('owner_id', user)
+      if (petsIdError) throw new Error(petsIdError.message)
 
       //Upload Data
       if (petsId) {
         const { data: dates, error: datesError } = await supabase
-          .from("requests")
+          .from('requests')
           .insert({
             start: startDateAsString,
             end: endDateAsString,
@@ -39,12 +41,12 @@ export default function Book({ houseId }: { houseId: number }) {
             pet_id: petsId[0].id,
             status: 1,
           })
-          .select();
-        // console.log(dates);
-        !datesError && setBookingCompleted(true);
+          .select()
+        if (datesError) throw new Error(datesError.message)
+        !datesError && setBookingCompleted(true)
       }
     }
-  };
+  }
   return (
     <>
       <div className="bg-gray-800">
@@ -53,17 +55,19 @@ export default function Book({ houseId }: { houseId: number }) {
       <h6 className="text-xl md:text-2xl pt-8">
         {value[0]
           ? `Selected Date: ${value[0].toLocaleDateString()} - ${
-              value[1]?.toLocaleDateString() ?? "No date selected"
+              value[1]?.toLocaleDateString() ?? 'No date selected'
             }`
-          : "No date range selected"}
+          : 'No date range selected'}
       </h6>
       {!bookingCompleted ? (
         <button className="button-green" onClick={handleBooking}>
           Send booking request!
         </button>
       ) : (
-        <h4 className="text-green-700">Booking request sent!</h4>
+        <p className="text-green-700 text-2xl md:text-4xl">
+          Booking request sent!
+        </p>
       )}
     </>
-  );
+  )
 }

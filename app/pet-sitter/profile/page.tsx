@@ -1,15 +1,15 @@
 // @ts-nocheck
 
-import { currentUserProfiles } from "@/app/queries";
-import { houseDetailsFromCurrentUser } from "@/app/queries";
-import Avatar from "@/components/Avatar";
-import FotosHouses from "@/components/FotosHouses";
+import { currentUserProfiles } from '@/app/queries'
+import { houseDetailsFromCurrentUser } from '@/app/queries'
+import Avatar from '@/app/components/Avatar'
+import FotosHouses from '@/app/components/FotosHouses'
 
 export default async function ProfilePetSitter() {
-  const userData = await currentUserProfiles();
-  let houseData;
+  const userData = await currentUserProfiles()
+  let houseData
   if (userData) {
-    houseData = await houseDetailsFromCurrentUser();
+    houseData = await houseDetailsFromCurrentUser()
   }
   return (
     <main>
@@ -30,5 +30,5 @@ export default async function ProfilePetSitter() {
       <Avatar userId={userData[0].id} />
       <FotosHouses userId={userData[0]?.id} />
     </main>
-  );
+  )
 }

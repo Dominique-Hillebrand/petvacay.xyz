@@ -40,7 +40,7 @@
     @apply mb-4;
   }
   h6 {
-    @apply mb-4;
+    @apply text-2xl mb-4;
   }
   .button-black {
     @apply py-2 px-4 rounded-md no-underline bg-btn-background hover:bg-btn-background-hover;
@@ -65,9 +65,7 @@
   }
 }
 
-.box-shadow1 {
-  box-shadow: rgba(206, 204, 204, 0.25) 0px 24px 24px, rgba(236, 223, 223, 0.12) 0px -12px 30px
-}
+
 /* .animate-in {
   animation: animateIn 0.3s ease 0.15s both;
 }

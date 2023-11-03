@@ -1,9 +1,9 @@
 import './globals.css'
-import Header from "../components/Header";
-import "@mantine/core/styles.css";
+import Header from './components/Header'
+import '@mantine/core/styles.css'
 
-import { MantineProvider, ColorSchemeScript } from "@mantine/core";
-export const dynamic = "force-dynamic";
+import { MantineProvider, ColorSchemeScript } from '@mantine/core'
+export const dynamic = 'force-dynamic'
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (

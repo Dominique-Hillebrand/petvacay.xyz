@@ -1,37 +1,33 @@
 // @ts-nocheck
 
-"use client";
-import React, { useState } from "react";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+'use client'
+import React, { useState } from 'react'
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 
 export default function ConfirmDenyButton({ requestId }) {
-  //   const [status, setStatus] = useState(1);
-  const [confirmed, setConfirmed] = useState(false);
-  const [denied, setDenied] = useState(false);
+  const [confirmed, setConfirmed] = useState(false)
+  const [denied, setDenied] = useState(false)
 
   const handleConfirm = async () => {
-    // setStatus(2);
-    setConfirmed(true);
-    uploadStatus(2);
-  };
+    setConfirmed(true)
+    uploadStatus(2)
+  }
 
   const handleDeny = async () => {
-    // setStatus(3);
-    setDenied(true);
-    uploadStatus(3);
-  };
-console.log("reqeustid", requestId);
-async function uploadStatus(statusId) {
-  const supabase = createClientComponentClient();
+    setDenied(true)
+    uploadStatus(3)
+  }
+  async function uploadStatus(statusId) {
+    const supabase = createClientComponentClient()
 
-  const { data: statusUpload, error: statusError } = await supabase
-    .from("requests")
-    .update({
-      status: statusId,
-    })
-    .eq("id", requestId);
-  console.log("status", statusUpload, statusError);
-}
+    const { data: statusUpload, error: statusError } = await supabase
+      .from('requests')
+      .update({
+        status: statusId,
+      })
+      .eq('id', requestId)
+    if (statusError) throw new Error(statusError.message)
+  }
 
   return (
     <>
@@ -50,5 +46,5 @@ async function uploadStatus(statusId) {
         <h4 className="text-2xl md:text-4xltext-gray-700">You denied!</h4>
       )}
     </>
-  );
+  )
 }

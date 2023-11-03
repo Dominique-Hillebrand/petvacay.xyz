@@ -5,98 +5,73 @@ import { cookies } from "next/headers";
 
 //***** Data from AUTH Table*/
 export const currentUserAuth = async function () {
-  const supabase = createServerComponentClient({ cookies });
+  const supabase = createServerComponentClient({ cookies })
 
-  try {
-    const { data, error } = await supabase.auth.getUser();
-    if (error) throw new Error(error.message);
-    return data;
-  } catch (error) {
-    console.error("Error getting current user auth:", error.message);
-  }
-};
+  const { data, error } = await supabase.auth.getUser()
+  if (error) throw new Error(error.message)
+  return data
+}
 
 //****** Data from Profile Table*/
 export const currentUserProfiles = async function () {
-  const supabase = createServerComponentClient({ cookies });
+  const supabase = createServerComponentClient({ cookies })
 
-  try {
-    const currentUserData = await currentUserAuth();
-    if (currentUserData) {
-      const { data, error } = await supabase
-        .from("profiles")
-        .select("*")
-        .eq("id", currentUserData.user.id);
-      if (error) throw new Error(error.message);
-      return data;
-    }
-  } catch (error) {
-    console.error("Error getting current user profile:", error.message);
+  const currentUserData = await currentUserAuth()
+  if (currentUserData) {
+    const { data, error } = await supabase
+      .from('profiles')
+      .select('*')
+      .eq('id', currentUserData.user.id)
+    if (error) throw new Error(error.message)
+    return data
   }
-};
+}
 
 //***********RoleId from Current user */
 export const roleIdCurrentUser = async function () {
-  const supabase = createServerComponentClient({ cookies });
-  try {
-    const currentUserData = await currentUserAuth();
-    if (currentUserData) {
-      const { data, error } = await supabase
-        .from("profiles")
-        .select("role_id")
-        .eq("id", currentUserData.user.id);
+  const supabase = createServerComponentClient({ cookies })
+  const currentUserData = await currentUserAuth()
+  if (currentUserData) {
+    const { data, error } = await supabase
+      .from('profiles')
+      .select('role_id')
+      .eq('id', currentUserData.user.id)
 
-      if (error) throw new Error(error.message);
-      return data;
-    }
-  } catch (error) {
-    console.error("Error getting role ID for current user:", error.message);
+    if (error) throw new Error(error.message)
+    return data
   }
-};
+}
 
 // **********get Data from pet
 export const petDetailsFromCurrentUser = async function () {
-  const supabase = createServerComponentClient({ cookies });
-  try {
-    const currentUserData = await currentUserAuth();
-    if (currentUserData) {
-      const { data, error } = await supabase
-        .from("pets")
-        .select("*")
-        .eq("owner_id", currentUserData.user.id);
+  const supabase = createServerComponentClient({ cookies })
 
-      if (error) throw new Error(error.message);
-      return data;
-    }
-  } catch (error) {
-    console.error(
-      "Error getting Pet Information of current user:",
-      error.message
-    );
+  const currentUserData = await currentUserAuth()
+  if (currentUserData) {
+    const { data, error } = await supabase
+      .from('pets')
+      .select('*')
+      .eq('owner_id', currentUserData.user.id)
+
+    if (error) throw new Error(error.message)
+    return data
   }
-};
+}
 
 // **********get Data from house
 export const houseDetailsFromCurrentUser = async function () {
-  const supabase = createServerComponentClient({ cookies });
-  try {
-    const currentUserData = await currentUserAuth();
-    if (currentUserData) {
-      const { data, error } = await supabase
-        .from("houses")
-        .select(`*`)
-        .eq("owner_id", currentUserData.user.id);
+  const supabase = createServerComponentClient({ cookies })
+  const currentUserData = await currentUserAuth()
+  if (currentUserData) {
+    const { data, error } = await supabase
+      .from('houses')
+      .select(`*`)
+      .eq('owner_id', currentUserData.user.id)
 
-      if (error) throw new Error(error.message);
-      return data;
-    }
-  } catch (error) {
-    console.error(
-      "Error getting House Information of current user:",
-      error.message
-    );
+    if (error) throw new Error(error.message)
+    return data
   }
-};
+}
 
 // **********get all houses with owner information
 // export const allHouses= async function () {
@@ -120,174 +95,126 @@ export const houseDetailsFromCurrentUser = async function () {
 //   }
 
 export const allHouses = async function () {
-  const supabase = createServerComponentClient({ cookies });
-  try {
-    const { data, error } = await supabase.from("houses").select(`
+  const supabase = createServerComponentClient({ cookies })
+
+  const { data, error } = await supabase.from('houses').select(`
         *, 
         profiles (*)
-        `);
-    // .eq("status", open);
-    if (error) throw new Error(error.message);
-    return data;
-  } catch (error) {
-    console.error("Error all houses:", error.message);
-  }
-};
+        `)
+  // .eq("status", open);
+  if (error) throw new Error(error.message)
+  return data
+}
 
 //get house and person info and fotos by houseid
 export const houseById = async function (id) {
-  const supabase = createServerComponentClient({ cookies });
-  try {
-    const { data: houseData, error: houseError } = await supabase
-      .from("houses")
-      .select(
-        `
+  const supabase = createServerComponentClient({ cookies })
+
+  const { data: houseData, error: houseError } = await supabase
+    .from('houses')
+    .select(
+      `
           *, 
           profiles (*)
           `
-      )
-      .eq("id", id);
-    if (houseError) throw new Error(houseError.message);
+    )
+    .eq('id', id)
+  if (houseError) throw new Error(houseError.message)
 
-    const houseUrls = await listAllFileUrlsFromBucket(
-      "houses",
-      houseData[0].owner_id
-    );
-    const profileUrls = await listAllFileUrlsFromBucket(
-      "avatars",
-      houseData[0].owner_id
-    );
+  const houseUrls = await listAllFileUrlsFromBucket(
+    'houses',
+    houseData[0].owner_id
+  )
+  const profileUrls = await listAllFileUrlsFromBucket(
+    'avatars',
+    houseData[0].owner_id
+  )
 
-    return {
-      ...houseData[0],
-      houseFotos: houseUrls,
-      profileFotos: profileUrls,
-    };
-  } catch (error) {
-    console.error("Error all houses:", error.message);
-    throw error;
+  return {
+    ...houseData[0],
+    houseFotos: houseUrls,
+    profileFotos: profileUrls,
   }
-};
+}
 
 // get all files from the users bucket
 export const allFilesFromUser = async function () {
-  const supabase = createServerComponentClient({ cookies });
+  const supabase = createServerComponentClient({ cookies })
 
-  try {
-    const currentUserData = await currentUserAuth();
-    if (currentUserData) {
-      const { data, error } = await supabase
-        .storage
-        .from('avatars')
-        .list(currentUserData.user.id + "/", {
-          limit: 100,
-          offset: 0,
-          sortBy: { column: 'name', order: 'asc' },
-        })
-        if (error) throw new Error(error.message);
-          return data;
-      }      
-  } catch (error) {
-    console.error("Error allFilesFromUser:", error.message);
+  const currentUserData = await currentUserAuth()
+  if (currentUserData) {
+    const { data, error } = await supabase.storage
+      .from('avatars')
+      .list(currentUserData.user.id + '/', {
+        limit: 100,
+        offset: 0,
+        sortBy: { column: 'name', order: 'asc' },
+      })
+    if (error) throw new Error(error.message)
+    return data
   }
-} 
+}
 
 // publicUrls
 export const publicUrls = async function (data) {
   const urls = await Promise.all(
     data.map(async (file) => {
-      try {
-        const { data: fileData, error: fileError } = supabase.storage
-          .from("houses")
-          .getPublicUrl(`${userId}/${file.name}`);
-
-        if (fileError) {
-          console.error(
-            "Error getting public URL for file:",
-            file.name,
-            fileError.message
-          );
-          return null;
-        }
-        return fileData.publicUrl;
-      } catch (error) {
-        console.error("An error occurred:", error.message);
-        return null;
-      }
+      const { data: fileData, error: fileError } = supabase.storage
+        .from('houses')
+        .getPublicUrl(`${userId}/${file.name}`)
+      if (error) throw new Error(error.message)
+      return fileData.publicUrl
     })
-  );
-  const filteredUrls = urls.filter((url) => url !== null);
-  console.log("All public URLs:", filteredUrls);
-
-  return filteredUrls;
-};
+  )
+  const filteredUrls = urls.filter((url) => url !== null)
+  return filteredUrls
+}
 
 // get fotos of houses and avatars and return the newData with ALL information
 export async function getFotosUrl(houses) {
   const data = await Promise.all(
     houses?.map(async (house) => {
       const houseUrls = await listAllFileUrlsFromBucket(
-        "houses",
+        'houses',
         house.profiles.id
-      );
+      )
       const profileUrls = await listAllFileUrlsFromBucket(
-        "avatars",
+        'avatars',
         house.profiles.id
-      );
+      )
 
-      return { ...house, houseFotos: houseUrls, profileFotos: profileUrls };
+      return { ...house, houseFotos: houseUrls, profileFotos: profileUrls }
     })
-  );
+  )
 
-  return data;
+  return data
 }
 
 export async function listAllFileUrlsFromBucket(bucketName, id) {
-  const supabase = createServerComponentClient({ cookies });
+  const supabase = createServerComponentClient({ cookies })
 
-  try {
-    const { data, error } = await supabase.storage.from(bucketName).list(id, {
-      limit: 100,
-      offset: 0,
-      sortBy: { column: "name", order: "asc" },
-    });
-    if (error) {
-      console.error("Error listing files:", error.message);
-      return [];
-    }
-    const urls = await publicUrls(data);
-    return urls;
-  } catch (error) {
-    console.error("An error occurred:", error.message);
-    return [];
-  }
+  const { data, error } = await supabase.storage.from(bucketName).list(id, {
+    limit: 100,
+    offset: 0,
+    sortBy: { column: 'name', order: 'asc' },
+  })
+  if (error) throw new Error(error.message)
+  const urls = await publicUrls(data)
+  return urls
 
   async function publicUrls(data) {
     const urls = await Promise.all(
       data.map(async (file) => {
-        try {
-          const { data: fileData, error: fileError } = supabase.storage
-            .from(bucketName)
-            .getPublicUrl(`${id}/${file.name}`);
+        const { data: fileData, error: fileError } = supabase.storage
+          .from(bucketName)
+          .getPublicUrl(`${id}/${file.name}`)
 
-          if (fileError) {
-            console.error(
-              "Error getting public URL for file:",
-              file.name,
-              fileError.message
-            );
-            return null;
-          }
-
-          return fileData.publicUrl;
-        } catch (error) {
-          console.error("An error occurred:", error.message);
-          return null;
-        }
+        if (error) throw new Error(error.message)
+        return fileData.publicUrl
       })
-    );
-    const filteredUrls = urls.filter((url) => url !== null);
-    return filteredUrls;
+    )
+    const filteredUrls = urls.filter((url) => url !== null)
+    return filteredUrls
   }
 }
 

@@ -1,54 +1,50 @@
 // @ts-nocheck
 
-import { cookies } from "next/headers";
-import { createServerActionClient } from "@supabase/auth-helpers-nextjs";
-// import Avatar from "@/components/Avatar";
-import { redirect } from "next/navigation";
-// import { revalidatePath } from "next/cache";
-// import { currentUserAuth } from "@/app/queries";
+import { cookies } from 'next/headers'
+import { createServerActionClient } from '@supabase/auth-helpers-nextjs'
+import { redirect } from 'next/navigation'
 
 export default async function PetOwner() {
   const addPersonPet = async (formData) => {
-    "use server";
-    const first_name = formData.get("firstName");
-    const last_name = formData.get("lastName");
-    const address = formData.get("address");
-    const number = formData.get("number");
-    const role_id = formData.get("roleId");
+    'use server'
+    const first_name = formData.get('firstName')
+    const last_name = formData.get('lastName')
+    const address = formData.get('address')
+    const number = formData.get('number')
+    const role_id = formData.get('roleId')
 
-    const name = formData.get("petName");
-    const age = formData.get("petAge");
-    const description = formData.get("petDescription");
-    const breed = formData.get("petBreed");
+    const name = formData.get('petName')
+    const age = formData.get('petAge')
+    const description = formData.get('petDescription')
+    const breed = formData.get('petBreed')
 
-    const supabase = createServerActionClient({ cookies });
-    const { data: profiles, error } = await supabase.from("profiles").insert({
+    const supabase = createServerActionClient({ cookies })
+    const { data: profiles, error } = await supabase.from('profiles').insert({
       first_name: first_name,
       last_name: last_name,
       address: address,
       number: number,
       role_id: role_id,
-    });
+    })
 
-    const { data, error: petsError } = await supabase.from("pets").insert({
+    const { data, error: petsError } = await supabase.from('pets').insert({
       name: name,
       age: age,
       description: description,
       breed: breed,
-    });
+    })
 
     if (petsError) {
-      console.error("Error inserting data in Pets table:", petsError.message);
-      throw new Error("An error occurred: ");
+      console.error('Error inserting data in Pets table:', petsError.message)
+      throw new Error('An error occurred: ')
     } else if (error) {
-      console.error("Error inserting data in profile table:", error.message);
-      throw new Error("An error occurred: ");
+      console.error('Error inserting data in profile table:', error.message)
+      throw new Error('An error occurred: ')
     } else {
-      console.log("Data inserted successfully.");
+      console.log('Data inserted successfully.')
     }
-    redirect("/pet-owner/profile");
-  };
-  // const { user } = await currentUserAuth();
+    redirect('/pet-owner/profile')
+  }
 
   return (
     <main className="">
@@ -146,5 +142,5 @@ export default async function PetOwner() {
       </form>
       {/* <Avatar userId={user.id} /> */}
     </main>
-  );
+  )
 }

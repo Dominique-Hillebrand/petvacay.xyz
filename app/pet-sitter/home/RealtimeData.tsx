@@ -1,34 +1,34 @@
-"use client";
+'use client'
 
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import ConfirmDenyButton from "./ConfirmDenyButton";
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import ConfirmDenyButton from './ConfirmDenyButton'
+import { useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 
 export default function RealtimeData({ allData }: { allData: any }) {
-  const supabase = createClientComponentClient();
-  const router = useRouter();
+  const supabase = createClientComponentClient()
+  const router = useRouter()
 
   useEffect(() => {
     const channel = supabase
-      .channel("realtime status data")
+      .channel('realtime status data')
       .on(
-        "postgres_changes",
+        'postgres_changes',
         {
-          event: "*",
-          schema: "public",
-          table: "requests",
+          event: '*',
+          schema: 'public',
+          table: 'requests',
         },
         () => {
-          router.refresh();
+          router.refresh()
         }
       )
-      .subscribe();
+      .subscribe()
 
     return () => {
-      supabase.removeChannel(channel);
-    };
-  }, [supabase, router]);
+      supabase.removeChannel(channel)
+    }
+  }, [supabase, router])
 
   return (
     <>
@@ -51,9 +51,9 @@ export default function RealtimeData({ allData }: { allData: any }) {
                         src={url}
                         alt={`Pet Image ${fotoIndex}`}
                         style={{
-                          width: "100px",
-                          height: "100px",
-                          margin: "5px",
+                          width: '100px',
+                          height: '100px',
+                          margin: '5px',
                         }}
                         className="object-cover flex"
                       />
@@ -108,9 +108,9 @@ export default function RealtimeData({ allData }: { allData: any }) {
                         src={url}
                         alt={`Pet Image ${fotoIndex}`}
                         style={{
-                          width: "100px",
-                          height: "100px",
-                          margin: "5px",
+                          width: '100px',
+                          height: '100px',
+                          margin: '5px',
                         }}
                         className="object-cover flex"
                       />
@@ -120,45 +120,45 @@ export default function RealtimeData({ allData }: { allData: any }) {
                   <div className="mb-6">
                     <p
                       className={`text-${
-                        item.status.id === 2 ? "green" : "gray"
+                        item.status.id === 2 ? 'green' : 'gray'
                       }-500 text-3xl`}
                     >
                       {item.pets.name}
                     </p>
-                    <p className={`text-${item.status.id === 3 && "gray"}-500`}>
+                    <p className={`text-${item.status.id === 3 && 'gray'}-500`}>
                       {item.pets.age} year/s
                     </p>
-                    <p className={`text-${item.status.id === 3 && "gray"}-500`}>
+                    <p className={`text-${item.status.id === 3 && 'gray'}-500`}>
                       {item.pets.breed}
                     </p>
                     <p className="italic text-gray-500">Description:</p>
-                    <p className={`text-${item.status.id === 3 && "gray"}-500`}>
+                    <p className={`text-${item.status.id === 3 && 'gray'}-500`}>
                       {item.pets.description}
                     </p>
                   </div>
                   <div className="mb-6">
                     <p className="italic text-gray-500">Owner:</p>
-                    <p className={`text-${item.status.id === 3 && "gray"}-500`}>
+                    <p className={`text-${item.status.id === 3 && 'gray'}-500`}>
                       {item.petOwner.first_name} {item.petOwner.last_name}
                     </p>
-                    <p className={`text-${item.status.id === 3 && "gray"}-500`}>
+                    <p className={`text-${item.status.id === 3 && 'gray'}-500`}>
                       {item.petOwner.address}
                     </p>
-                    <p className={`text-${item.status.id === 3 && "gray"}-500`}>
+                    <p className={`text-${item.status.id === 3 && 'gray'}-500`}>
                       {item.petOwner.number}
                     </p>
                   </div>
                   <div>
                     <p
                       className={`text-${
-                        item.status.id === 2 ? "green" : "gray"
+                        item.status.id === 2 ? 'green' : 'gray'
                       }-500 text-lg md:text-xl`}
                     >
                       {item.startDate} - {item.endDate}
                     </p>
                     <p
                       className={`text-${
-                        item.status.id === 2 ? "green" : "gray"
+                        item.status.id === 2 ? 'green' : 'gray'
                       }-500 mb-6`}
                     >
                       {item.price} €
@@ -167,10 +167,10 @@ export default function RealtimeData({ allData }: { allData: any }) {
                     <p
                       className={`w-[100px] ${
                         item.status.id === 2
-                          ? "button-green"
+                          ? 'button-green'
                           : item.status.id === 3
-                          ? "button-gray"
-                          : ""
+                          ? 'button-gray'
+                          : ''
                       }`}
                     >
                       {item.status.name}
@@ -184,5 +184,5 @@ export default function RealtimeData({ allData }: { allData: any }) {
         )}
       </section>
     </>
-  );
+  )
 }

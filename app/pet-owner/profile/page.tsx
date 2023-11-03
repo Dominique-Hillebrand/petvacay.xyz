@@ -1,14 +1,14 @@
 // @ts-nocheck
 
-import { currentUserProfiles } from "@/app/queries";
-import { petDetailsFromCurrentUser } from "@/app/queries";
-import FotosPets from "@/components/FotosPets";
+import { currentUserProfiles } from '@/app/queries'
+import { petDetailsFromCurrentUser } from '@/app/queries'
+import FotosPets from '@/app/components/FotosPets'
 
 export default async function ProfilePetOwner() {
-  const userData = await currentUserProfiles();
-  let petData;
+  const userData = await currentUserProfiles()
+  let petData
   if (userData) {
-    petData = await petDetailsFromCurrentUser();
+    petData = await petDetailsFromCurrentUser()
   }
 
   return (
@@ -31,5 +31,5 @@ export default async function ProfilePetOwner() {
         <FotosPets userId={userData[0]?.id} />
       </div>
     </main>
-  );
+  )
 }

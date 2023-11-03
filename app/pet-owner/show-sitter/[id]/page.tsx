@@ -1,17 +1,14 @@
 // @ts-nocheck
 
-import { houseById } from "@/app/queries";
-import Link from "next/link";
-import { Booking } from "@/components/Booking";
-import DateCalender from "@/components/DateCalender";
-import Book from "./Book";
+import { houseById } from '@/app/queries'
+import Book from './Book'
 
 export default async function ShowSitter({
   params,
 }: {
-  params: { id: string };
+  params: { id: string }
 }) {
-  let house = await houseById(params.id);
+  let house = await houseById(params.id)
   return (
     <main>
       <p className="text-5xl md:text-7xl"> {house.name}</p>
@@ -23,7 +20,7 @@ export default async function ShowSitter({
               key={`house-${index}`}
               src={url}
               alt={`House Image ${index}`}
-              style={{ width: "100px", height: "100px", margin: "5px" }}
+              style={{ width: '100px', height: '100px', margin: '5px' }}
               className="object-cover"
             />
           ))}
@@ -50,7 +47,7 @@ export default async function ShowSitter({
               key={`profile-${index}`}
               src={url}
               alt={`Profile Image ${index}`}
-              style={{ width: "100px", height: "100px", margin: "5px" }}
+              style={{ width: '100px', height: '100px', margin: '5px' }}
               className="object-cover"
             />
           ))}
@@ -61,5 +58,5 @@ export default async function ShowSitter({
       <p className="text-2xl">price/night: {house.price} €</p>
       <Book houseId={params.id} />
     </main>
-  );
+  )
 }

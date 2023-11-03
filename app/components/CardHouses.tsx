@@ -1,16 +1,16 @@
 // @ts-nocheck
 
-import { allHouses } from "@/app/queries";
-import { getFotosUrl } from "@/app/queries";
-import Link from "next/link";
+import { allHouses } from '@/app/queries'
+import { getFotosUrl } from '@/app/queries'
+import Link from 'next/link'
 
 export default async function CardHouses() {
-  const houses = await allHouses();
-  const allData = await getFotosUrl(houses);
+  const houses = await allHouses()
+  const allData = await getFotosUrl(houses)
   return (
     <>
       {allData?.map((house) => {
-        const profile = house.profiles;
+        const profile = house.profiles
         return (
           <div
             key={house.id}
@@ -42,7 +42,7 @@ export default async function CardHouses() {
                       key={`house-${index}`}
                       src={url}
                       alt={`House Image ${index}`}
-                      style={{ width: "90px", height: "90px", margin: "5px" }}
+                      style={{ width: '90px', height: '90px', margin: '5px' }}
                       className="object-cover"
                     />
                   ))}
@@ -55,7 +55,7 @@ export default async function CardHouses() {
                       key={`profile-${index}`}
                       src={url}
                       alt={`Profile Image ${index}`}
-                      style={{ width: "90px", height: "90px", margin: "5px" }}
+                      style={{ width: '90px', height: '90px', margin: '5px' }}
                     />
                   ))}
                 </div>
@@ -72,8 +72,8 @@ export default async function CardHouses() {
               </Link>
             </section>
           </div>
-        );
+        )
       })}
     </>
-  );
+  )
 }

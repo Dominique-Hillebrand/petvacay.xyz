@@ -1,14 +1,13 @@
 // @ts-nocheck
 
-import { houseById } from "@/app/queries";
-import Link from "next/link";
+import { houseById } from '@/app/queries'
 
 export default async function BookSitter({
   params,
 }: {
-  params: { id: string };
+  params: { id: string }
 }) {
-  let house = await houseById(params.id);
+  let house = await houseById(params.id)
   return (
     <main>
       <h2 className="text-4xl md:text-6xl text-green-700">
@@ -31,13 +30,10 @@ export default async function BookSitter({
       <br />
       <p>{house.m2} m2</p>
       <p>price/night: {house.price} €</p>
-      {/* <Link href={`/pet-owner/book/${house.id}`} className="button-green">
-        Contact 
-      </Link> */}
       <p className="text-2xl md:text-4xl text-orange-700">
-        Wait for the confirmation of {house.profiles.first_name}{" "}
+        Wait for the confirmation of {house.profiles.first_name}{' '}
         {house.profiles.last_name}
       </p>
     </main>
-  );
+  )
 }

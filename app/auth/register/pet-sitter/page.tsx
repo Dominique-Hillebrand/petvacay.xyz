@@ -1,50 +1,52 @@
 // @ts-nocheck
 
-import { cookies } from "next/headers";
-import { createServerActionClient } from "@supabase/auth-helpers-nextjs";
-import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
-
+import { cookies } from 'next/headers'
+import { createServerActionClient } from '@supabase/auth-helpers-nextjs'
+import { revalidatePath } from 'next/cache'
+import { redirect } from 'next/navigation'
 
 export default async function PetSitter() {
   const addPersonHouse = async (formData) => {
-    "use server";
+    'use server'
 
-    const first_name = formData.get("firstName");
-    const last_name = formData.get("lastName");
-    const address = formData.get("address");
-    const number = formData.get("number");
-    const role_id = formData.get("roleId");
+    const first_name = formData.get('firstName')
+    const last_name = formData.get('lastName')
+    const address = formData.get('address')
+    const number = formData.get('number')
+    const role_id = formData.get('roleId')
 
-    const name = formData.get("houseName");
-    const m2 = formData.get("m2");
-    const description = formData.get("houseDescription");
-    const price = formData.get("price");
+    const name = formData.get('houseName')
+    const m2 = formData.get('m2')
+    const description = formData.get('houseDescription')
+    const price = formData.get('price')
 
-    const supabase = createServerActionClient({ cookies });
-    const { data, error } = await supabase.from("profiles").insert({
+    const supabase = createServerActionClient({ cookies })
+    const { data, error } = await supabase.from('profiles').insert({
       first_name: first_name,
       last_name: last_name,
       address: address,
       number: number,
       role_id: role_id,
-    });
-    revalidatePath("/");
+    })
+    if (error) {
+      throw new Error('An error occurred: ' + error.message)
+    }
+    revalidatePath('/')
 
     const { data: houses, error: houseError } = await supabase
-      .from("houses")
+      .from('houses')
       .insert({
         name: name,
         m2: m2,
         description: description,
         price: price,
-      });
-    if (error || houseError) {
-      throw new Error("An error occurred: " + error.message);
+      })
+    if (houseError) {
+      throw new Error('An error occurred: ' + houseError.message)
     } else {
-      redirect("/pet-sitter/profile");
+      redirect('/pet-sitter/profile')
     }
-  };
+  }
 
   return (
     <main className="">
@@ -140,5 +142,5 @@ export default async function PetSitter() {
         </button>
       </form>
     </main>
-  );
+  )
 }

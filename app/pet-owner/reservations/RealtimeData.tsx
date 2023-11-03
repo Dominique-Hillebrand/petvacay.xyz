@@ -1,33 +1,33 @@
 "use client";
 
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import { useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 
 export default function RealtimeData({ allData }: any) {
-  const supabase = createClientComponentClient();
-  const router = useRouter();
+  const supabase = createClientComponentClient()
+  const router = useRouter()
 
   useEffect(() => {
     const channel = supabase
-      .channel("realtime status data")
+      .channel('realtime status data')
       .on(
-        "postgres_changes",
+        'postgres_changes',
         {
-          event: "*",
-          schema: "public",
-          table: "requests",
+          event: '*',
+          schema: 'public',
+          table: 'requests',
         },
         () => {
-          router.refresh();
+          router.refresh()
         }
       )
-      .subscribe();
+      .subscribe()
 
     return () => {
-      supabase.removeChannel(channel);
-    };
-  }, [supabase, router]);
+      supabase.removeChannel(channel)
+    }
+  }, [supabase, router])
 
   return (
     <section>
@@ -44,9 +44,9 @@ export default function RealtimeData({ allData }: any) {
                   src={url}
                   alt={`owner Image ${fotoIndex}`}
                   style={{
-                    width: "100px",
-                    height: "100px",
-                    margin: "5px",
+                    width: '100px',
+                    height: '100px',
+                    margin: '5px',
                   }}
                   className="object-cover flex"
                 />
@@ -59,9 +59,9 @@ export default function RealtimeData({ allData }: any) {
                   src={url}
                   alt={`house Image ${fotoIndex}`}
                   style={{
-                    width: "100px",
-                    height: "100px",
-                    margin: "5px",
+                    width: '100px',
+                    height: '100px',
+                    margin: '5px',
                   }}
                   className="object-cover flex"
                 />
@@ -87,14 +87,14 @@ export default function RealtimeData({ allData }: any) {
           <div>
             <p
               className={`text-${
-                item.status.id === 2 ? "green" : "gray"
+                item.status.id === 2 ? 'green' : 'gray'
               }-500 text-lg md:text-xl`}
             >
               {item.startDate} - {item.endDate}
             </p>
             <p
               className={`text-${
-                item.status.id === 2 ? "green" : "gray"
+                item.status.id === 2 ? 'green' : 'gray'
               }-500 mb-6`}
             >
               {item.house.price} €
@@ -103,10 +103,10 @@ export default function RealtimeData({ allData }: any) {
             <p
               className={`w-[100px] ${
                 item.status.id === 2
-                  ? "button-green"
+                  ? 'button-green'
                   : item.status.id === 3 || 1
-                  ? "button-gray"
-                  : ""
+                  ? 'button-gray'
+                  : ''
               }`}
             >
               {item.status.name}
@@ -115,5 +115,5 @@ export default function RealtimeData({ allData }: any) {
         </div>
       ))}
     </section>
-  );
+  )
 }
