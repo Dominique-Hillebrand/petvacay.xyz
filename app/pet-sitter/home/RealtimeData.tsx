@@ -35,7 +35,7 @@ export default function RealtimeData({ allData }: { allData: any }) {
       <section>
         {allData.some((item: any) => item.status.id === 1) ? (
           <div>
-            <h1>You have new booking requests</h1>
+            <h1 className="">You have new booking requests</h1>
             <p>--hit confirm or deny --</p>
             {allData
               .filter((item: any) => item.status.id === 1)
@@ -87,13 +87,13 @@ export default function RealtimeData({ allData }: { allData: any }) {
               ))}
           </div>
         ) : (
-          <p className="text-gray-500">-- No open booking requests. --</p>
+          <p className="text-gray-500 mb-6">-- No open booking requests. --</p>
         )}
       </section>
       <section>
         {allData.some((item: any) => item.status.id !== 1) ? (
           <div>
-            <h4 className="text-2xl md:text-4xl mt-16">Reservation History:</h4>
+            <h4 className="text-2xl md:text-4xl">Reservation History:</h4>
             {allData
               .filter((item: any) => item.status.id !== 1)
               .map((item: any) => (

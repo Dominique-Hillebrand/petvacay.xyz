@@ -1,44 +1,56 @@
 // @ts-nocheck
 
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import { cookies } from "next/headers";
+import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
+import { cookies } from 'next/headers'
 
 //***** Data from AUTH Table*/
 export const currentUserAuth = async function () {
   const supabase = createServerComponentClient({ cookies })
 
-  const { data, error } = await supabase.auth.getUser()
-  if (error) throw new Error(error.message)
-  return data
+  try {
+    const { data, error } = await supabase.auth.getUser()
+    if (error) throw new Error(error.message)
+    return data
+  } catch (error) {
+    console.error('Error getting current user auth:', error.message)
+  }
 }
 
 //****** Data from Profile Table*/
 export const currentUserProfiles = async function () {
   const supabase = createServerComponentClient({ cookies })
 
-  const currentUserData = await currentUserAuth()
-  if (currentUserData) {
-    const { data, error } = await supabase
-      .from('profiles')
-      .select('*')
-      .eq('id', currentUserData.user.id)
-    if (error) throw new Error(error.message)
-    return data
+  try {
+    const currentUserData = await currentUserAuth()
+    if (currentUserData) {
+      const { data, error } = await supabase
+        .from('profiles')
+        .select('*')
+        .eq('id', currentUserData.user.id)
+      if (error) throw new Error(error.message)
+      return data
+    }
+  } catch (error) {
+    console.error('Error getting current user profile:', error.message)
   }
 }
 
 //***********RoleId from Current user */
 export const roleIdCurrentUser = async function () {
   const supabase = createServerComponentClient({ cookies })
-  const currentUserData = await currentUserAuth()
-  if (currentUserData) {
-    const { data, error } = await supabase
-      .from('profiles')
-      .select('role_id')
-      .eq('id', currentUserData.user.id)
+  try {
+    const currentUserData = await currentUserAuth()
+    if (currentUserData) {
+      const { data, error } = await supabase
+        .from('profiles')
+        .select('role_id')
+        .eq('id', currentUserData.user.id)
 
-    if (error) throw new Error(error.message)
-    return data
+      if (error) throw new Error(error.message)
+      return data
+    }
+  } catch (error) {
+    console.error('Error getting role ID for current user:', error.message)
   }
 }
 
@@ -183,7 +195,8 @@ export async function getFotosUrl(houses) {
         house.profiles.id
       )
 
-      return { ...house, houseFotos: houseUrls, profileFotos: profileUrls }
+      return { ...house, fotos: [...profileUrls, ...houseUrls] }
+      // return { ...house, houseFotos: houseUrls, profileFotos: profileUrls }
     })
   )
 

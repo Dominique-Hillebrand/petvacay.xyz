@@ -8,7 +8,7 @@ export const dynamic = 'force-dynamic'
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body>
+      <body className="bg-white text-black">
         <Header />
         <div className="m-6">
           <MantineProvider>{children}</MantineProvider>

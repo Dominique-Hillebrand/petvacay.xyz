@@ -3,19 +3,18 @@
 import { allHouses } from '@/app/queries'
 import { getFotosUrl } from '@/app/queries'
 import Link from 'next/link'
+import CardFotos from './CardFotos'
 
 export default async function CardHouses() {
   const houses = await allHouses()
   const allData = await getFotosUrl(houses)
   return (
     <>
-      {allData?.map((house) => {
+      <CardFotos allData={allData} />
+      {/* {allData?.map((house) => {
         const profile = house.profiles
         return (
-          <div
-            key={house.id}
-            className="box-shadow1 rounded-xl p-4 grid grid-rows-4"
-          >
+          <div key={house.id} className="">
             <section className="">
               <p className="text-3xl">{house.name}</p>
               <p className="h-14">{house.description}</p>
@@ -73,7 +72,7 @@ export default async function CardHouses() {
             </section>
           </div>
         )
-      })}
+      })} */}
     </>
   )
 }
