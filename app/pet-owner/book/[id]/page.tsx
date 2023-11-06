@@ -28,7 +28,9 @@ export default async function BookSitter({
         </>
       )}
       <br />
-      <p>{house.m2} m2</p>
+      <p>
+        {house.m2} m<span className="align-super text-xs">2</span>
+      </p>
       <p>price/night: {house.price} €</p>
       <p className="text-2xl md:text-4xl text-orange-700">
         Wait for the confirmation of {house.profiles.first_name}{' '}

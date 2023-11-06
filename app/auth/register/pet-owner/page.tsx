@@ -48,7 +48,7 @@ export default async function PetOwner() {
 
   return (
     <main className="">
-      <h1 className="text-5xl md:text-7xl pb-8">Register your Pet:</h1>
+      <h1 className="text-5xl md:text-7xl md:pb-8">Register your Pet:</h1>
       <form className="signUp-form" action={addPersonPet} id="registrationForm">
         <label className="text-md" htmlFor="firstName">
           First Name
@@ -136,7 +136,7 @@ export default async function PetOwner() {
           placeholder="Breed"
           required
         />
-        <button className="bg-green-700 rounded px-4 py-2 text-white mb-2 mt-16">
+        <button className="bg-green-700 rounded px-4 py-2 text-white mb-2 md:mt-16">
           Register
         </button>
       </form>

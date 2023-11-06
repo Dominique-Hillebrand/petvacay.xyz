@@ -23,7 +23,11 @@ export default async function ProfilePetSitter() {
       {/* <h4 className="mb-6">House Data</h4> */}
       <div className="grid grid-cols-[240px_1fr] mb-8">
         <p>House Name: </p> <p>{houseData[0]?.name}</p>
-        <p>Available space for pet:</p> <p> {houseData[0]?.m2} m2</p>
+        <p>Available space for pet:</p>{' '}
+        <p>
+          {' '}
+          {houseData[0]?.m2} m <span className="align-super text-xs">2</span>
+        </p>
         <p>Description:</p> <p> {houseData[0]?.description}</p>
         <p>Price:</p> <p> {houseData[0]?.price} €</p>
       </div>

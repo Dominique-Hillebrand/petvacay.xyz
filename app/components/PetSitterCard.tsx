@@ -72,7 +72,9 @@ export default function PetSitterCard({ house }: any) {
         <section className="p-4">
           <h3 className="text-3xl">{house.name}</h3>
           <p className="text-gray-500 truncate">{house.description}</p>
-          <p className="text-gray-500">size: {house.m2} m2</p>
+          <p className="text-gray-500">
+            size: {house.m2} m<span className="align-super text-xs">2</span>
+          </p>
           <p className="text-xl">price/night: {house.price} €</p>
         </section>
       </Link>

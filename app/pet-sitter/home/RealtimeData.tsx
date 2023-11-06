@@ -43,7 +43,7 @@ export default function RealtimeData({ allData }: { allData: any }) {
               .map((item: any) => (
                 <div
                   key={item.id}
-                  className="border border-gray-700  grid grid-cols-1 md:grid-cols-2 md:gap-8 mb-8 p-4"
+                  className="border border-gray-700  grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 md:gap-8 mb-8 p-4"
                 >
                   {/* <div className="">
                     {item.fotos.map((url: any, fotoIndex: number) => (
@@ -75,7 +75,7 @@ export default function RealtimeData({ allData }: { allData: any }) {
                     </p>
                     <p>{item.petOwner.address}</p>
                     <p>
-                      <span className="italic text-gray-500">phone: </span>{' '}
+                      <span className="italic text-gray-500">Phone: </span>{' '}
                       {item.petOwner.number}
                     </p>
                   </div>

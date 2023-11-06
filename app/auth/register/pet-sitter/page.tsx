@@ -108,7 +108,7 @@ export default async function PetSitter() {
           required
         />
         <label className="text-md" htmlFor="m2">
-          How many m2 do you have?
+          How many m<span className="align-super text-xs">2</span> do you have?
         </label>
         <input
           className="input-text"

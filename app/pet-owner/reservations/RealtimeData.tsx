@@ -31,7 +31,7 @@ export default function RealtimeData({ allData }: any) {
   }, [supabase, router])
 
   return (
-    <section>
+    <>
       {allData.map((item: any) => (
         <div
           key={item.id}
@@ -60,7 +60,9 @@ export default function RealtimeData({ allData }: any) {
           <ShowPetSitter item={item} />
           <div className="mb-6">
             <p className="text-3xl">{item.house.name}</p>
-            <p>{item.house.m2} m2</p>
+            <p>
+              {item.house.m2} m<span className="align-super text-xs">2</span>
+            </p>
             {/* <p>{item.house.description}</p> */}
             <p className="italic text-gray-500 mt-6 md:mt-0">Description:</p>
             <p>{item.house.description}</p>
@@ -103,6 +105,6 @@ export default function RealtimeData({ allData }: any) {
           </div>
         </div>
       ))}
-    </section>
+    </>
   )
 }
