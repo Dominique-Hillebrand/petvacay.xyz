@@ -26,7 +26,7 @@ export default async function ProfilePetSitter() {
         <p>Available space for pet:</p>{' '}
         <p>
           {' '}
-          {houseData[0]?.m2} m <span className="align-super text-xs">2</span>
+          {houseData[0]?.m2} m<span className="align-super text-xs">2</span>
         </p>
         <p>Description:</p> <p> {houseData[0]?.description}</p>
         <p>Price:</p> <p> {houseData[0]?.price} €</p>

@@ -37,7 +37,7 @@ export default async function Header() {
               >
                 Reservations
               </Link>
-              <p className="hidden md:flex">
+              <p className="px-6 py-2 mx-2 my-5 ">
                 Welcome, {profile[0].first_name}!
               </p>
               <BurgerMenu
@@ -65,7 +65,7 @@ export default async function Header() {
               >
                 Profile
               </Link>
-              <p className="hidden md:flex">
+              <p className="px-6 py-2 mx-2 my-5 ">
                 Welcome, {profile[0].first_name}!
               </p>
               <BurgerMenu
