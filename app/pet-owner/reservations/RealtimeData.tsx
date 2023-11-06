@@ -3,6 +3,7 @@
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
+import ShowPetSitter from '@/app/components/ShowPetSitter'
 
 export default function RealtimeData({ allData }: any) {
   const supabase = createClientComponentClient()
@@ -34,15 +35,18 @@ export default function RealtimeData({ allData }: any) {
       {allData.map((item: any) => (
         <div
           key={item.id}
-          className="border-2 border-gray-700 grid grid-cols-1 md:grid-cols-4 gap-8 mb-8 p-4 "
+          // className={` border-2 ${
+          //   item.status.id === 2 ? 'border-green-500' : 'border-gray-400'
+          // } grid grid-cols-1 md:grid-cols-4 gap-8 mb-8 p-4`}
+          className="border border-gray-700 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 md:gap-8 mb-8 p-4 "
         >
-          <div className="flex">
+          {/* <div className="flex">
             <div className="mr-4">
-              {item.ownerFotos.map((url: any, fotoIndex: any) => (
+              {item.fotos.map((url: any, fotoIndex: any) => (
                 <img
-                  key={`owner-image-${fotoIndex}`}
+                  key={`image-${fotoIndex}`}
                   src={url}
-                  alt={`owner Image ${fotoIndex}`}
+                  alt={`Image ${fotoIndex}`}
                   style={{
                     width: '100px',
                     height: '100px',
@@ -52,28 +56,13 @@ export default function RealtimeData({ allData }: any) {
                 />
               ))}
             </div>
-            <div>
-              {item.houseFotos.map((url: any, fotoIndex: Number) => (
-                <img
-                  key={`house-image-${fotoIndex}`}
-                  src={url}
-                  alt={`house Image ${fotoIndex}`}
-                  style={{
-                    width: '100px',
-                    height: '100px',
-                    margin: '5px',
-                  }}
-                  className="object-cover flex"
-                />
-              ))}
-            </div>
-          </div>
-
+          </div> */}
+          <ShowPetSitter item={item} />
           <div className="mb-6">
             <p className="text-3xl">{item.house.name}</p>
             <p>{item.house.m2} m2</p>
             {/* <p>{item.house.description}</p> */}
-            <p className="italic text-gray-500">Description:</p>
+            <p className="italic text-gray-500 mt-6 md:mt-0">Description:</p>
             <p>{item.house.description}</p>
           </div>
           <div className="mb-6">
@@ -88,14 +77,14 @@ export default function RealtimeData({ allData }: any) {
             <p
               className={`text-${
                 item.status.id === 2 ? 'green' : 'gray'
-              }-500 text-lg md:text-xl`}
+              }-500 font-medium text-lg mb-4 md:text-xl`}
             >
               {item.startDate} - {item.endDate}
             </p>
             <p
               className={`text-${
                 item.status.id === 2 ? 'green' : 'gray'
-              }-500 mb-6`}
+              }-500 font-medium text-lg md:text-xl mb-6`}
             >
               {item.house.price} €
             </p>
@@ -103,9 +92,9 @@ export default function RealtimeData({ allData }: any) {
             <p
               className={`w-[100px] ${
                 item.status.id === 2
-                  ? 'button-green'
+                  ? 'status-green'
                   : item.status.id === 3 || 1
-                  ? 'button-gray'
+                  ? 'status-gray'
                   : ''
               }`}
             >

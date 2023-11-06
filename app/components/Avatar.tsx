@@ -77,7 +77,7 @@ export default function Avatar({ userId }) {
       <form
         onSubmit={handleSubmit}
         className="signUp-form"
-        style={{ display: publicUrlsArray.length < 3 ? 'flex' : 'none' }}
+        // style={{ display: publicUrlsArray.length < 3 ? 'flex' : 'none' }}
       >
         <h6 className="text-xl md:text-2xl">
           Upload 3 Fotos of yourself here:

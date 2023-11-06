@@ -72,7 +72,7 @@ export default function FotosPets({ userId }) {
       <form
         onSubmit={handleSubmit}
         className="signUp-form"
-        style={{ display: publicUrlsArray.length < 3 ? 'flex' : 'none' }}
+        // style={{ display: publicUrlsArray.length < 3 ? 'flex' : 'none' }}
       >
         <h6 className="text-xl md:text-2xl">Upload Fotos of your Pet here:</h6>
         <input type="file" name="image" onChange={handleFileSelected} />

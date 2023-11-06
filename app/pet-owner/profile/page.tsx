@@ -13,17 +13,17 @@ export default async function ProfilePetOwner() {
 
   return (
     <main>
-      <h1 className="text-5xl md:text-7xl mb-6">Your Data</h1>
-      <div className="grid grid-cols-2 max-w-[300px] mb-6">
+      <h1 className="mb-6">Your Profile</h1>
+      <div className="grid grid-cols-[240px_1fr] mb-6">
         <p>First Name:</p> <p> {userData[0].first_name}</p>
         <p>Last Name: </p> <p>{userData[0].last_name}</p>
         <p>Address: </p> <p> {userData[0].address}</p>
         <p>Tel. Nr.: </p> <p> {userData[0].number}</p>
       </div>
-      <h2 className="text-4xl md:text-6xl mb-6">Your Pets Data</h2>
-      <div className="grid grid-cols-2 max-w-[300px] mb-8">
+      {/* <h4 className="mb-6">Pet Information</h4> */}
+      <div className="grid grid-cols-[240px_1fr] mb-8">
         <p>Pet Name: </p> <p>{petData[0].name}</p>
-        <p>Age:</p> <p> {petData[0].age} years</p>
+        <p>Pet Age:</p> <p> {petData[0].age} years</p>
         <p>Description:</p> <p> {petData[0].description}</p>
         <p>Breed:</p> <p> {petData[0].breed}</p>
       </div>

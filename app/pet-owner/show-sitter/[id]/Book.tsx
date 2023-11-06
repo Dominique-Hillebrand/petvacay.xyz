@@ -49,9 +49,7 @@ export default function Book({ houseId }: { houseId: number }) {
   }
   return (
     <>
-      <div className="bg-gray-800">
-        <DateCalender onDateSelect={handleDateSelect} />
-      </div>
+      <DateCalender onDateSelect={handleDateSelect} />
       <h6 className="text-xl md:text-2xl pt-8">
         {value[0]
           ? `Selected Date: ${value[0].toLocaleDateString()} - ${
@@ -64,7 +62,7 @@ export default function Book({ houseId }: { houseId: number }) {
           Send booking request!
         </button>
       ) : (
-        <p className="text-green-700 text-2xl md:text-4xl">
+        <p className="text-green-700 text-2xl font-medium md:text-4xl">
           Booking request sent!
         </p>
       )}

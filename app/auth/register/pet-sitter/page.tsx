@@ -28,9 +28,9 @@ export default async function PetSitter() {
       number: number,
       role_id: role_id,
     })
-    if (error) {
-      throw new Error('An error occurred: ' + error.message)
-    }
+    // if (error) {
+    //   throw new Error('An error occurred: ' + error.message)
+    // }
     revalidatePath('/')
 
     const { data: houses, error: houseError } = await supabase
@@ -41,16 +41,16 @@ export default async function PetSitter() {
         description: description,
         price: price,
       })
-    if (houseError) {
-      throw new Error('An error occurred: ' + houseError.message)
-    } else {
-      redirect('/pet-sitter/profile')
-    }
+    // if (houseError) {
+    //   throw new Error('An error occurred: ' + houseError.message)
+    // } else {
+    redirect('/pet-sitter/profile')
+    // }
   }
 
   return (
     <main className="">
-      <h1 className="text-5xl md:text-7xl pb-8">Register your House:</h1>
+      <h1 className="text-5xl md:text-7xl">Register your House:</h1>
       <form className="signUp-form" action={addPersonHouse}>
         <label className="text-md" htmlFor="firstName">
           First Name
@@ -118,7 +118,7 @@ export default async function PetSitter() {
           required
         />
         <label className="text-md" htmlFor="houseDescription">
-          Tell us more about your yourseslf and your home.
+          Tell us more about your yourself and your home.
         </label>
         <textarea
           className="input-text"

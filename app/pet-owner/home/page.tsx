@@ -1,16 +1,22 @@
 // @ts-nocheck
 
-import CardHouses from '@/app/components/CardHouses'
 // import DateCalender from '@/app/components/DateCalender'
+import { allHouses } from '@/app/queries'
+import { getFotosUrl } from '@/app/queries'
+import Link from 'next/link'
+import CardsGallery from '@/app/components/CardsGallery'
 
 export default async function Home() {
+  const houses = await allHouses()
+  const allData = await getFotosUrl(houses)
+
   return (
     <main>
-      <h1 className="">Book your Pet-Sitter!</h1>
+      <h1 className="text-5xl md:text-7xl">Book your Pet-Sitter!</h1>
       {/* <p className="">Select Date:</p> */}
       {/* <DateCalender /> */}
-      <div className="grid sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8 rounded-xl">
-        <CardHouses />
+      <div className="">
+        <CardsGallery allData={allData} />
       </div>
     </main>
   )

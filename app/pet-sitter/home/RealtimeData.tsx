@@ -4,6 +4,7 @@ import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import ConfirmDenyButton from './ConfirmDenyButton'
 import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
+import ShowPetSitter from '@/app/components/ShowPetSitter'
 
 export default function RealtimeData({ allData }: { allData: any }) {
   const supabase = createClientComponentClient()
@@ -42,9 +43,9 @@ export default function RealtimeData({ allData }: { allData: any }) {
               .map((item: any) => (
                 <div
                   key={item.id}
-                  className="border-2 border-gray-700 grid grid-cols-4 gap-8 mb-8 p-4 "
+                  className="border border-gray-700  grid grid-cols-1 md:grid-cols-2 md:gap-8 mb-8 p-4"
                 >
-                  <div className="">
+                  {/* <div className="">
                     {item.fotos.map((url: any, fotoIndex: number) => (
                       <img
                         key={`pet-image-${fotoIndex}`}
@@ -58,13 +59,13 @@ export default function RealtimeData({ allData }: { allData: any }) {
                         className="object-cover flex"
                       />
                     ))}
-                  </div>
-
+                  </div> */}
+                  <ShowPetSitter item={item} />
                   <div className="mb-6">
                     <p className="text-3xl">{item.pets.name}</p>
-                    <p>{item.pets.age} year/s</p>
+                    <p>{item.pets.age} year/s old</p>
                     <p>{item.pets.breed}</p>
-                    <p className="italic text-gray-500">Description:</p>
+                    <p className="italic text-gray-500 mt-6">Description:</p>
                     <p>{item.pets.description}</p>
                   </div>
                   <div className="mb-6">
@@ -73,13 +74,18 @@ export default function RealtimeData({ allData }: { allData: any }) {
                       {item.petOwner.first_name} {item.petOwner.last_name}
                     </p>
                     <p>{item.petOwner.address}</p>
-                    <p>{item.petOwner.number}</p>
+                    <p>
+                      <span className="italic text-gray-500">phone: </span>{' '}
+                      {item.petOwner.number}
+                    </p>
                   </div>
                   <div>
-                    <p className="text-green-500 text-lg md:text-xl">
+                    <p className="text-green-500 font-medium text-lg md:text-xl mb-4">
                       {item.startDate} - {item.endDate}
                     </p>
-                    <p className="mb-6 text-green-500">{item.price} €</p>
+                    <p className="mb-6 text-green-500 text-lg md:text-xl">
+                      {item.price} €
+                    </p>
                     <p className="text-green-500 w-24">{item.name}</p>
                     <ConfirmDenyButton requestId={item.id} />
                   </div>
@@ -99,9 +105,9 @@ export default function RealtimeData({ allData }: { allData: any }) {
               .map((item: any) => (
                 <div
                   key={item.id}
-                  className="border-2 border-gray-700 grid grid-cols-2 md:grid-cols-4 gap-8 mb-8 p-4 "
+                  className="border-2 border-gray-700 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8 mb-8 p-4 "
                 >
-                  <div className="">
+                  {/* <div className="">
                     {item.fotos.map((url: any, fotoIndex: Number) => (
                       <img
                         key={`pet-image-${fotoIndex}`}
@@ -115,7 +121,8 @@ export default function RealtimeData({ allData }: { allData: any }) {
                         className="object-cover flex"
                       />
                     ))}
-                  </div>
+                  </div> */}
+                  <ShowPetSitter item={item} />
 
                   <div className="mb-6">
                     <p
@@ -167,9 +174,9 @@ export default function RealtimeData({ allData }: { allData: any }) {
                     <p
                       className={`w-[100px] ${
                         item.status.id === 2
-                          ? 'button-green'
+                          ? 'status-green'
                           : item.status.id === 3
-                          ? 'button-gray'
+                          ? 'status-gray'
                           : ''
                       }`}
                     >

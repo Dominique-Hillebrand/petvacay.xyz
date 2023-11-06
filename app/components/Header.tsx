@@ -15,10 +15,9 @@ export default async function Header() {
     profile = await currentUserProfiles()
   }
   return (
-    <header className="ml-2 flex items-center mb-6 border-b border-gray-300">
+    <header className="ml-2 flex items-center mb-10 border-b border-gray-300">
       {user ? (
         <>
-          {/* <p>Hey, {profile[0].first_name}!</p> */}
           <LogoutButton />
           {roleId.length > 0 && roleId[0].role_id == 1 && (
             <>
@@ -31,6 +30,9 @@ export default async function Header() {
               <Link href="/pet-owner/reservations" className="navbutton">
                 Reservations
               </Link>
+              <p className="hidden md:flex">
+                Welcome, {profile[0].first_name}!
+              </p>
             </>
           )}
           {roleId.length > 0 && roleId[0].role_id == 2 && (
@@ -41,12 +43,15 @@ export default async function Header() {
               <Link href="/pet-sitter/profile" className="navbutton">
                 Profile
               </Link>
+              <p className="hidden md:flex">
+                Welcome, {profile[0].first_name}!
+              </p>
             </>
           )}
         </>
       ) : (
         <>
-          <Link href="/login" className="navbutton">
+          <Link href="/login" className="logbutton">
             Login / Sign Up
           </Link>
         </>

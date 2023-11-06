@@ -144,8 +144,9 @@ export const houseById = async function (id) {
 
   return {
     ...houseData[0],
-    houseFotos: houseUrls,
-    profileFotos: profileUrls,
+    // houseFotos: houseUrls,
+    // profileFotos: profileUrls,
+    fotos: [...profileUrls, ...houseUrls],
   }
 }
 

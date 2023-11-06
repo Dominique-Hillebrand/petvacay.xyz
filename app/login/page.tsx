@@ -3,7 +3,7 @@ import Messages from './messages'
 
 export default function Login() {
   return (
-    <main>
+    <main className="flex justify-center">
       <form className="signUp-form" action="/auth/sign-in" method="post">
         <label className="text-md" htmlFor="email">
           Email

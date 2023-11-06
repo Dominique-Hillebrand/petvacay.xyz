@@ -58,9 +58,8 @@ export default async function Reservations() {
         endDate: endDate,
         status: statusData[0],
         house: houseData.data[0],
-        houseFotos: fotosHouse,
         owner: ownerData.data[0],
-        ownerFotos: fotosPerson,
+        fotos: [...fotosPerson, ...fotosHouse],
       }
     })
   )

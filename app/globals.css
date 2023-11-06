@@ -25,46 +25,58 @@
     @apply text-white
   } */
   h1 {
-    @apply mb-8 !important;
+    @apply mb-8 text-5xl md:text-7xl !important;
   }
   h2 {
-    @apply mb-6 ;
+    @apply mb-6 text-4xl md:text-6xl;
   }
   h3 {
-    @apply mb-6;
+    @apply mb-6 text-2xl md:text-5xl;
   }
   h4 {
-    @apply mb-4;
+    @apply mb-4 text-2xl md:text-4xl;
   }
   h5 {
-    @apply mb-4;
+    @apply mb-4 text-xl md:text-3xl;
   }
   h6 {
-    @apply text-2xl mb-4;
+    @apply mb-4 text-xl md:text-2xl;
   }
   /* .button-black {
     @apply py-2 px-4 rounded-md no-underline bg-btn-background hover:bg-btn-background-hover;
   }  */
   .button-gray-border {
-    @apply border border-gray-700 rounded px-4 py-2 mb-2;
+    @apply border border-gray-700 rounded px-4 py-2 mb-2 hover:bg-slate-300;
   } 
   .button-green {
-    @apply bg-green-700 rounded px-4 py-2 mb-2;
+    @apply bg-green-700 rounded-lg px-4 py-2 mb-2 text-white hover:bg-green-800 border border-green-900;
   }
   .button-gray {
-    @apply bg-gray-500 rounded px-4 py-2 mb-2;
+    @apply bg-gray-300 rounded-lg px-4 py-2 mb-2 text-black hover:bg-gray-400 border border-black;
   }
   .signUp-form {
-    @apply flex flex-col max-w-[450px];
+    @apply flex flex-col min-w-[100%] md:min-w-[50%] lg:min-w-[30%] mt-16 justify-center;
   } 
   .input-text {
-    @apply rounded-md px-4 py-2 bg-inherit border mb-6
+    @apply rounded-md px-4 py-2 bg-inherit border placeholder-gray-800 mb-6
   } 
   .text-small {
     @apply text-xs
   }
   .navbutton {
-    @apply px-6 py-2 mx-2 my-5 border border-gray-300 rounded-2xl text-black
+    @apply px-6 py-2 mx-2 my-5 border border-gray-300 rounded-2xl text-black hover:bg-black hover:text-white
+  }
+  .logbutton {
+    @apply px-6 py-2 mx-2 my-5 border border-gray-300 rounded-2xl bg-black text-white hover:bg-gray-700
+  }
+  .status-green {
+    @apply bg-green-700 rounded-lg px-4 py-2 mb-2 text-white;
+  }
+  .status-gray {
+    @apply bg-gray-300 rounded-lg px-4 py-2 mb-2 text-black;
+  }
+  .image-transition {
+    transition: opacity 0.5s ease-in-out;
   }
 }
 
