@@ -18,7 +18,7 @@ export default function DateCalender({ onDateSelect }: DateCalendarProps) {
   }
 
   return (
-    <div>
+    <div className="mt-8 inline-block border border-gray-300 p-2">
       <DatePicker
         type="range"
         allowSingleDateInRange

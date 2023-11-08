@@ -29,10 +29,11 @@ export default function RealtimeData({ allData }: any) {
       supabase.removeChannel(channel)
     }
   }, [supabase, router])
-
-  return (
-    <>
-      {allData.map((item: any) => (
+console.log(allData)
+return (
+  <>
+    {allData.length > 0 ? (
+      allData.map((item: any) => (
         <div
           key={item.id}
           // className={` border-2 ${
@@ -40,23 +41,6 @@ export default function RealtimeData({ allData }: any) {
           // } grid grid-cols-1 md:grid-cols-4 gap-8 mb-8 p-4`}
           className="border border-gray-700 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 md:gap-8 mb-8 p-4 "
         >
-          {/* <div className="flex">
-            <div className="mr-4">
-              {item.fotos.map((url: any, fotoIndex: any) => (
-                <img
-                  key={`image-${fotoIndex}`}
-                  src={url}
-                  alt={`Image ${fotoIndex}`}
-                  style={{
-                    width: '100px',
-                    height: '100px',
-                    margin: '5px',
-                  }}
-                  className="object-cover flex"
-                />
-              ))}
-            </div>
-          </div> */}
           <ShowPetSitter item={item} />
           <div className="mb-6">
             <p className="text-3xl">{item.house.name}</p>
@@ -104,7 +88,10 @@ export default function RealtimeData({ allData }: any) {
             </p>
           </div>
         </div>
-      ))}
-    </>
-  )
+      ))
+    ) : (
+      <p>-- No reservations yet --</p>
+    )}
+  </>
+)
 }

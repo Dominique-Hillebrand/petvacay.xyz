@@ -9,7 +9,7 @@ export default async function Reservations() {
   const supabase = createServerComponentClient({ cookies })
 
   const { data, error } = await supabase.auth.getUser()
-  if (error) throw new Error(error.message)
+  // if (error) throw new Error(error.message)
 
   const { data: pet_id, error: currentUserError } = await supabase
     .from(`pets`)

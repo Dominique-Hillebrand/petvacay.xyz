@@ -52,7 +52,7 @@ export default function PetSitterCard({ house }: any) {
                   src={arrowprev}
                   alt="prev-arrow"
                   width={24}
-                  height={24}
+                  height={29.5}
                 />
               </button>
               <button
@@ -60,7 +60,7 @@ export default function PetSitterCard({ house }: any) {
                 disabled={isNextDisabled}
                 className="disabled:opacity-0"
               >
-                <Image src={arrow} alt="next-arrow" width={24} height={24} />
+                <Image src={arrow} alt="next-arrow" width={24} height={29.5} />
               </button>
             </div>
           </div>

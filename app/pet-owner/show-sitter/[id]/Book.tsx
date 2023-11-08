@@ -21,7 +21,7 @@ export default function Book({ houseId }: { houseId: number }) {
       //getData from Database
       const supabase = createClientComponentClient()
       const { data, error: userError } = await supabase.auth.getUser()
-      if (userError) throw new Error(userError.message)
+      // if (userError) throw new Error(userError.message)
       const user = data.user?.id
 
       const { data: petsId, error: petsIdError } = await supabase

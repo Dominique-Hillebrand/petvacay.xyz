@@ -9,7 +9,7 @@ export default async function Home() {
   const supabase = createServerComponentClient({ cookies })
 
   const { data, error } = await supabase.auth.getUser()
-  if (error) throw new Error(error.message)
+  // if (error) throw new Error(error.message)
 
   const { data: currentUser, error: currentUserError } = await supabase
     .from(`profiles`)
