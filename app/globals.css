@@ -21,9 +21,6 @@
 } */
 
 @layer base {
-  /* * {
-    @apply text-white
-  } */
   h1 {
     @apply mb-8 text-5xl md:text-7xl !important;
   }

@@ -21,11 +21,12 @@ export default async function Index() {
         Or you would like to earn money and look after someones pet? Sign up as
         a pet-sitter so that pet-owners can check out your profile and book you!
       </p>
-      <Image
+      {/* <Image
         src={womanpets}
         alt="Image of a women with pets"
-        className="mt-4"
-      />
+        className="mt-4 w-full"
+        width={530}
+      /> */}
     </div>
   )
 }

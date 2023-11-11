@@ -1,8 +1,8 @@
-import './globals.css'
 import Header from './components/Header'
 import '@mantine/core/styles.css'
 import '@mantine/dates/styles.css'
 import { MantineProvider, ColorSchemeScript } from '@mantine/core'
+import './globals.css'
 export const dynamic = 'force-dynamic'
 
 export default function RootLayout({
